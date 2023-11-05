@@ -3,7 +3,7 @@ import { Utils, createVisualComponent, useSession, Lsi } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import Plus4U5Elements from "uu_plus4u5g02-elements";
 import { withRoute } from "uu_plus4u5g02-app";
-
+import Tile from "../bricks/joke/tile";
 import Config from "./config/config.js";
 import WelcomeRow from "../bricks/welcome-row.js";
 import RouteBar from "../core/route-bar.js";
@@ -44,13 +44,16 @@ let Home = createVisualComponent({
     
     //@@viewOn:render
     return (
-      <div>
+      <>
         <h1>My message to the World:</h1>
         <div>
           <b>Hello </b>
           <i>World!</i>
         </div>
-      </div>
+        <Tile/>
+        <Tile/>
+        <Tile/>
+      </>
     );
     //@@viewOff:render
     

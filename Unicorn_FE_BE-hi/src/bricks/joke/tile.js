@@ -54,7 +54,7 @@ const Tile = createVisualComponent({
           </Text>
         </div>
         <div>
-          <img src="https://placeimg.com/640/320/any" />
+          <img src="../assets/pngegg.png" width="400" height="300" />
         </div>
         <Line significance="subdued" />
         <div>
@@ -79,7 +79,7 @@ const Tile = createVisualComponent({
         </Box>
       </Box>
     );
-    
+
     //@@viewOff:render
   },
 });
