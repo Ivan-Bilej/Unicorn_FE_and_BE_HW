@@ -38,8 +38,23 @@ let Home = createVisualComponent({
   //@@viewOn:defaultProps
   defaultProps: {},
   //@@viewOff:defaultProps
+    
 
   render(props) {
+    
+    //@@viewOn:render
+    return (
+      <div>
+        <h1>My message to the World:</h1>
+        <div>
+          <b>Hello </b>
+          <i>World!</i>
+        </div>
+      </div>
+    );
+    //@@viewOff:render
+    
+    /*
     //@@viewOn:private
     const { identity } = useSession();
     //@@viewOff:private
@@ -80,10 +95,12 @@ let Home = createVisualComponent({
       </div>
     );
     //@@viewOff:render
+     */
   },
 });
 
-Home = withRoute(Home, { authenticated: true });
+
+Home = withRoute(Home, { authenticated: false });
 
 //@@viewOn:exports
 export { Home };
