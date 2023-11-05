@@ -1,0 +1,17 @@
+{
+  "product": "Unicorn_FE_BE",
+  "version": "0.1.0",
+  "license": "License Commercial",
+  "description": {
+    "en": "",
+    "cs": ""
+  },
+  "devkit": {
+    "development": {
+      "appBoxLocationUri": "----- VALUE REQUIRED -----",
+      "appDeploymentUri": null
+    }
+  },
+  "Unicorn_FE_BE-hi": {},
+  "Unicorn_FE_BE-server": {}
+}
