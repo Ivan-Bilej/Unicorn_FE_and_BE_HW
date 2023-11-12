@@ -4,6 +4,8 @@ import Uu5Elements from "uu5g05-elements";
 import Plus4U5Elements from "uu_plus4u5g02-elements";
 import { withRoute } from "uu_plus4u5g02-app";
 import Tile from "../bricks/joke/tile";
+import ListProvider from "../bricks/joke/list-provider";
+import ListView from "../bricks/joke/list-view";
 import Config from "./config/config.js";
 import WelcomeRow from "../bricks/welcome-row.js";
 import RouteBar from "../core/route-bar.js";
@@ -26,6 +28,9 @@ const Css = {
 //@@viewOn:helpers
 //@@viewOff:helpers
 
+
+/*
+//--- Test 3 section 5-Properties ---
 let jokeList = [
   {
     id: Utils.String.generateId(),
@@ -52,6 +57,8 @@ let jokeList = [
     sys: { cts: "2021-02-14T10:48:38.990Z" },
   },
 ];
+*/
+
 
 let Home = createVisualComponent({
   //@@viewOn:statics
@@ -59,15 +66,55 @@ let Home = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  //propTypes: {},
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
-  defaultProps: {},
+  //defaultProps: {},
   //@@viewOff:defaultProps
     
 
   render() {
+    //@@viewOn:render
+    return (
+      <>
+        <RouteBar />
+        <ListProvider>
+          {({ jokeList, remove, update }) => <ListView jokeList={jokeList} onDelete={remove} onUpdate={update} />}
+        </ListProvider>
+      </>
+    );
+    //@@viewOff:render
+
+
+
+    // --- Test 4 Section 5-2 Properties ---
+    /*
+    //@@viewOn:render
+    return (
+      <>
+        <RouteBar />
+        <ListProvider>
+          {({ jokeList, remove, update }) =>
+            jokeList.map((joke) => (
+              <Tile
+                key={joke.id}
+                joke={joke}
+                onDelete={(event) => remove(event.data)}
+                onUpdate={(event) => update(event.data)}
+                style={{ width: 640, margin: "24px auto" }}
+              />
+            ))
+          }
+        </ListProvider>
+      </>
+    );
+    //@@viewOff:render
+    */
+
+
+    /*
+    //--- Test 3 section 5-Properties ---
     //@@viewOn:private
     function handleUpdate(event) {
       alert(
@@ -85,22 +132,11 @@ let Home = createVisualComponent({
       );
     }
     //@@vieOff:private
+    */
 
-    //--- Test 4 section 5_2-Properties ---
-    //@@viewOn:render
-    return jokeList.map((joke) => (
-      <Tile
-        key={joke.id}
-        joke={joke}
-        onDelete={handleDelete}
-        onUpdate={handleUpdate}
-        style={{ width: 640, margin: "24px auto" }}
-      />
-    ));
-    //@@viewOff:render
 
-    //--- Test 3 section 5_1-Properties ---
     /*
+    //--- Test 3 section 5-Properties ---
     //@@viewOn:render
     return (
       <>
@@ -146,7 +182,7 @@ let Home = createVisualComponent({
     */
 
     //--- Test 1 from section 4-Component ---
-      /*
+    /*
     //@@viewOn:render
     return (
       <>
