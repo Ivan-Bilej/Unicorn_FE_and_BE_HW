@@ -14,12 +14,11 @@ const Css = {
 const Tile = createVisualComponent({
   //@@viewOn:statics
   uu5Tag: Config.TAG + "Tile",
-  //nestingLevel: ["areaCollection", "area"],
   //@@viewOff:statics
 
    //@@viewOn:propTypes
    propTypes: {
-    joke: PropTypes.shape({
+    shoppingList: PropTypes.shape({
       name: PropTypes.string.isRequired,
       text: PropTypes.string,
       imageUrl: PropTypes.string,
@@ -43,123 +42,47 @@ const Tile = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
-    //--- Test 2 from section 5-Properties ---
     function handleDelete(event) {
-      props.onDelete(new Utils.Event(props.joke, event));
+      props.onDelete(new Utils.Event(props.shoppingList, event));
     }
 
     function handleUpdate(event) {
-      props.onUpdate(new Utils.Event(props.joke, event));
+      props.onUpdate(new Utils.Event(props.shoppingList, event));
     }
     //@@viewOff:private
     const { elementProps } = Utils.VisualComponent.splitProps(props);
 
-    //@@viewOn:private
-    //--- Main text from Bricks ---
-    //const { children } = props;
-
-
-    //--- Test 1 fro section 4-Component ---
-    /*
-    function handleDelete() {
-      alert("I can't delete joke. I'm dumb visual component.");
-    }
-
-    function handleUpdate() {
-      alert("I can't update joke. I'm dumb visual component.");
-    }
-    */
-    //@@viewOff:private
-
-    //@@viewOn:render
-
-    //--- Main text from Bricks ---
-    /*
-    const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
-    const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, Tile);
-
-    return currentNestingLevel ? (
-      <div {...attrs}>
-        <div>Visual Component {Tile.uu5Tag}</div>
-        <Content nestingLevel={currentNestingLevel}>{children}</Content>
-      </div>
-    ) : null;
-    */
-
-
     return (
-        
-        //--- Test 2 from section 5-Properties ---
-        <Box {...elementProps}>
-          <Text category="interface" segment="title" type="minor" colorScheme="building">
-            {props.joke.name}
-          </Text>
-          <div>
-            <Text category="interface" segment="content" type="medium" colorScheme="building">
-              {props.joke.text}
-            </Text>
-          </div>
-          <div>
-            <img src={props.joke.imageUrl} />
-          </div>
-          <Line significance="subdued" />
-          <div>
-            <Text category="interface" segment="content" type="medium" significance="subdued" colorScheme="building">
-              {props.joke.uuIdentityName}
-            </Text>
-          </div>
-          <div>
-            <Text category="interface" segment="content" type="medium" significance="subdued" colorScheme="building">
-              <DateTime value={props.joke.sys.cts} />
-            </Text>
-          </div>
-          <Box significance="distinct">
-            {`Average rating: ${props.joke.averageRating.toFixed(props.joke.averageRating % 1 ? 1 : 0)} / 5`}
-            <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" />
-            <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" />
-          </Box>
-        </Box>
-      
-
-      //--- Test 1 fro section 4-Component ---
-      /*
-      <Box style={{ width: 640, margin: "24px auto" }}>
+      <Box {...elementProps}>
         <Text category="interface" segment="title" type="minor" colorScheme="building">
-          New Years' resolution
+          {props.shoppingList.name}
         </Text>
         <div>
           <Text category="interface" segment="content" type="medium" colorScheme="building">
-            My New Years' resolution is 8K.
+            {props.shoppingList.description}
           </Text>
         </div>
         <div>
-          <img src="../assets/pngegg.png" width="400" height="300" />
+          <img width="300" height="300" src={props.shoppingList.imageUrl} />
         </div>
         <Line significance="subdued" />
         <div>
           <Text category="interface" segment="content" type="medium" significance="subdued" colorScheme="building">
-            IT, sport, hardware
+            {props.shoppingList.uuIdentityName}
           </Text>
         </div>
         <div>
           <Text category="interface" segment="content" type="medium" significance="subdued" colorScheme="building">
-            Jan Novák
-          </Text>
-        </div>
-        <div>
-          <Text category="interface" segment="content" type="medium" significance="subdued" colorScheme="building">
-            17.03.2022
+            <DateTime value={props.shoppingList.sys.cts} />
           </Text>
         </div>
         <Box significance="distinct">
-          Average rating: 3 / 5
+          {`Average rating: ${props.shoppingList.averageRating.toFixed(props.shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
           <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" />
           <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" />
         </Box>
       </Box>
-      */
     );
-    //@@viewOff:render
   },
 });
 

@@ -16,7 +16,7 @@ const Mode = {
 function CreateButton(props) {
   return (
     <Button {...props} colorScheme="primary" significance="highlighted">
-      Create joke
+      Create shopping list
     </Button>
   );
 }
@@ -45,17 +45,17 @@ const CreateView = createVisualComponent({
     const [mode, setMode] = useState(Mode.BUTTON);
 
     function handleSubmit(event) {
-      let joke;
+      let shoppingList;
 
       try {
-        joke = props.onCreate(event.data.value);
+        shoppingList = props.onCreate(event.data.value);
       } catch (error) {
         // We pass Error.Message instance to the Uu5Forms.Form that shows alert
-        throw new Utils.Error.Message("Joke create failed!", error);
+        throw new Utils.Error.Message("shoppingList create failed!", error);
       }
 
       addAlert({
-        message: `Joke ${joke.name} has been created.`,
+        message: `shoppingList ${shoppingList.name} has been created.`,
         priority: "success",
         durationMs: 2000,
       });

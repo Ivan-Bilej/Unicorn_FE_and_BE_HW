@@ -19,10 +19,10 @@ let Home = createVisualComponent({
       <>
         <RouteBar />
         <ListProvider>
-          {({ jokeList, remove, update, create }) => (
+          {({ shoppingLists, remove, update, create }) => (
             <>
               <CreateView onCreate={create} style={{ maxWidth: 400, margin: "24px auto", display: "block" }} />
-              <ListView jokeList={jokeList} onDelete={remove} onUpdate={update} />
+              <ListView shoppingLists={shoppingLists} onDelete={remove} onUpdate={update} />
             </>
           )}
         </ListProvider>
@@ -32,7 +32,7 @@ let Home = createVisualComponent({
   },
 });
 
-Home = withRoute(Home, { authenticated: true });
+Home = withRoute(Home, { authenticated: false });
 
 //@@viewOn:exports
 export { Home };

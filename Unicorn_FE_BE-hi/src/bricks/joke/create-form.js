@@ -1,6 +1,6 @@
 //@@viewOn:imports
 import { createVisualComponent, PropTypes, Utils } from "uu5g05";
-import { Form, FormText, SubmitButton, CancelButton } from "uu5g05-forms";
+import { Form, FormText, SubmitButton, CancelButton, FormFile, FormLink } from "uu5g05-forms";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -30,10 +30,11 @@ const CreateForm = createVisualComponent({
     return (
       <Form {...elementProps} onSubmit={props.onSubmit}>
         <FormText name="name" label="Name" required />
-        <FormText name="text" label="Text" required />
+        <FormText name="description" label="Description" required />
+        <FormLink name="imageUrl" label="Insert Image URL path"/>
         <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", paddingTop: 8 }}>
           <CancelButton onClick={props.onCancel}>Cancel</CancelButton>
-          <SubmitButton>Create joke</SubmitButton>
+          <SubmitButton>Create Shopping List</SubmitButton>
         </div>
       </Form>
     );

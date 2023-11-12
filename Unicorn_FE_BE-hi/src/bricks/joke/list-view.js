@@ -25,7 +25,7 @@ const ListView = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    jokeList: PropTypes.array.isRequired,
+    shoppingLists: PropTypes.array.isRequired,
     onUpdate: PropTypes.func,
     onDelete: PropTypes.func,
   },
@@ -33,7 +33,7 @@ const ListView = createVisualComponent({
 
   //@@viewOn:defaultProps
   defaultProps: {
-    jokeList: [],
+    shoppingLists: [],
     onUpdate: () => {},
     onDelete: () => {},
   },
@@ -52,18 +52,18 @@ const ListView = createVisualComponent({
     }
 
     function handleDelete(event) {
-      const joke = event.data;
+      const shoppingList = event.data;
 
       try {
-        props.onDelete(joke);
+        props.onDelete(shoppingList);
         addAlert({
-          message: `The joke ${joke.name} has been deleted.`,
+          message: `The shoppingList ${shoppingList.name} has been deleted.`,
           priority: "success",
           durationMs: 2000,
         });
       } catch (error) {
-        ListView.logger.error("Error deleting joke", error);
-        showError(error, "Joke delete failed!");
+        ListView.logger.error("Error deleting shoppingList", error);
+        showError(error, "shoppingList delete failed!");
       }
     }
 
@@ -71,26 +71,22 @@ const ListView = createVisualComponent({
       try {
         props.onUpdate(event.data);
       } catch (error) {
-        ListView.logger.error("Error updating joke", error);
-        showError(error, "Joke update failed!");
+        ListView.logger.error("Error updating shoppingList", error);
+        showError(error, "shoppingList update failed!");
       }
     }
-    //const { children } = props;
     //@@viewOff:private
 
-    //@@viewOn:interface
-    //@@viewOff:interface
 
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
-    //const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListView);
 
     return (
       <div {...attrs}>
-        {props.jokeList.map((joke) => (
+        {props.shoppingLists.map((shoppingList) => (
           <Tile
-            key={joke.id}
-            joke={joke}
+            key={shoppingList.id}
+            shoppingList={shoppingList}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
             style={{ width: 640, margin: "24px auto" }}
