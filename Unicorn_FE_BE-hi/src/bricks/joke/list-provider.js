@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, Utils } from "uu5g05";
+import { createComponent, Utils, useState } from "uu5g05";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -10,7 +10,7 @@ import Config from "./config/config.js";
 //@@viewOff:helpers
 
 // --- Test 3 section 5_1-Properties ---
-let jokeList = [
+const initialJokeList = [
   {
     id: Utils.String.generateId(),
     name: "Bunny ate the wedding ring!",
@@ -53,31 +53,36 @@ const ListProvider = createComponent({
 
   render(props) {
     //@@viewOn:private
-    //--- Test 3 section 5_1-Properties ---
+    const [jokeList, setJokeList] = useState(initialJokeList);
+
+
     function remove(joke) {
-      jokeList = jokeList.filter((item) => item.id !== joke.id);
+      setJokeList((prevJokeList) => prevJokeList.filter((item) => item.id !== joke.id));
+    }
+
+    function create(values) {
+      const joke = {
+        ...values,
+        id: Utils.String.generateId(),
+        averageRating: Math.round(Math.random() * 5), // <0, 5>
+        uuIdentityName: "Gerald of Rivia",
+        sys: {
+          cts: new Date().toISOString(),
+        },
+      };
+
+      setJokeList((prevJokeList) => [...prevJokeList, joke]);
+      return joke;
     }
 
     function update() {
       throw new Error("Joke update is not implemented yet.");
     }
-
-
-    // --- Test Main ---
-    //const { children } = props;
     //@@viewOff:private
 
-    //@@viewOn:interface
-    //@@viewOff:interface
-
     //@@viewOn:render
-    //--- Test 3 section 5_1-Properties ---
-    const value = { jokeList, remove, update };
+    const value = { jokeList, remove, update, create };
     return typeof props.children === "function" ? props.children(value) : props.children;
-
-
-    // --- Test Main ---
-    //return children ?? null;
     //@@viewOff:render
   },
 });
