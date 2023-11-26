@@ -59,7 +59,7 @@ const ListView = createVisualComponent({
         addAlert({
           message: `The shoppingList ${shoppingList.name} has been deleted.`,
           priority: "success",
-          durationMs: 2000,
+          durationMs: 3000,
         });
       } catch (error) {
         ListView.logger.error("Error deleting shoppingList", error);

@@ -2,6 +2,7 @@
 import { createVisualComponent, PropTypes, Utils } from "uu5g05";
 import { Form, FormText, SubmitButton, CancelButton, FormFile, FormLink } from "uu5g05-forms";
 import Config from "./config/config.js";
+import { Modal } from "uu5g05-elements";
 //@@viewOff:imports
 
 const CreateForm = createVisualComponent({
@@ -28,6 +29,7 @@ const CreateForm = createVisualComponent({
     const { elementProps } = Utils.VisualComponent.splitProps(props);
 
     return (
+      //<Modal>
       <Form {...elementProps} onSubmit={props.onSubmit}>
         <FormText name="name" label="Name" required />
         <FormText name="description" label="Description" required />
@@ -37,6 +39,7 @@ const CreateForm = createVisualComponent({
           <SubmitButton>Create Shopping List</SubmitButton>
         </div>
       </Form>
+      //</Modal>
     );
     //@@viewOff:render
   },

@@ -6,10 +6,75 @@ import Config from "./config/config.js";
 
 //@@viewOn:css
 const Css = {
-  main: () => Config.Css.css({}),
+  main: () =>
+    Config.Css.css({
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+    }),
+
+  header: () =>
+    Config.Css.css({
+      display: "block",
+      padding: 16,
+      height: 48,
+    }),
+
+  content: (image) =>
+    Config.Css.css({
+      display: "flex",
+      alignItems: image ? "center" : "left",
+      justifyContent: image ? "center" : "flex-start",
+      height: "calc(100% - 48px - 48px)",
+      overflow: "hidden",
+    }),
+
+  text: () =>
+    Config.Css.css({
+      display: "block",
+      marginLeft: 16,
+      marginRight: 16,
+      marginBottom: 16,
+    }),
+
+  image: () => Config.Css.css({ width: "100%" }),
+
+  footer: () =>
+    Config.Css.css({
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      height: 48,
+      marginTop: 8,
+      paddingLeft: 16,
+      paddingRight: 8,
+    }),
+
+  infoLine: () =>
+    Config.Css.css({
+      display: "block",
+      marginLeft: 16,
+      marginTop: 8,
+    }),
 };
 //@@viewOff:css
 
+//@@viewOn:helpers
+function InfoLine({ children }) {
+  return (
+    <Text
+      category="interface"
+      segment="content"
+      type="medium"
+      significance="subdued"
+      colorScheme="building"
+      className={Css.infoLine()}
+    >
+      {children}
+    </Text>
+  );
+}
+//@@viewOff:helpers
 
 const Tile = createVisualComponent({
   //@@viewOn:statics
@@ -50,10 +115,10 @@ const Tile = createVisualComponent({
       props.onUpdate(new Utils.Event(props.shoppingList, event));
     }
     //@@viewOff:private
-    const { elementProps } = Utils.VisualComponent.splitProps(props);
+    const { elementProps } = Utils.VisualComponent.splitProps(props, Css.main());
 
     return (
-      <Box {...elementProps}>
+      /*<Box {...elementProps}>
         <Text category="interface" segment="title" type="minor" colorScheme="building">
           {props.shoppingList.name}
         </Text>
@@ -80,6 +145,41 @@ const Tile = createVisualComponent({
           {`Average rating: ${props.shoppingList.averageRating.toFixed(props.shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
           <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" />
           <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" />
+        </Box>
+      </Box>*/
+
+      <Box {...elementProps}>
+        <Text category="interface" segment="title" type="minor" colorScheme="building" className={Css.header()}>
+          {props.shoppingList.name}
+        </Text>
+        <div>
+          <Text category="interface" segment="content" type="medium" colorScheme="building" className={Css.text()}>
+            {props.shoppingList.description}
+          </Text>
+        </div>
+        <div className={Css.content(props.shoppingList.image)}>
+          {props.shoppingList.text && !props.shoppingList.image && (
+            <Text category="interface" segment="content" type="medium" colorScheme="building" className={Css.text()}>
+              {props.shoppingList.text}
+            </Text>
+          )}
+          {props.shoppingList.imageUrl && <img src={props.shoppingList.imageUrl} alt={props.shoppingList.name} className={Css.image()} />}
+        </div>
+
+        <Line significance="subdued" />
+
+        <InfoLine>{props.shoppingList.uuIdentityName}</InfoLine>
+
+        <InfoLine>
+          <DateTime value={props.shoppingList.sys.cts} dateFormat="short" timeFormat="none" />
+        </InfoLine>
+
+        <Box significance="distinct" className={Css.footer()}>
+          {`Average rating: ${props.shoppingList.averageRating.toFixed(props.shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
+          <div>
+            <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" />
+            <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" />
+          </div>
         </Box>
       </Box>
     );
