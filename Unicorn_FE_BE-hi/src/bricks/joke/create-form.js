@@ -5,6 +5,55 @@ import Config from "./config/config.js";
 import { Modal } from "uu5g05-elements";
 //@@viewOff:imports
 
+//@@viewOn:css
+const Css = {
+  content: () =>
+    Config.Css.css({
+      width: "100%",
+    }),
+
+  image: () =>
+    Config.Css.css({
+      display: "block",
+      width: "100%",
+      margin: "auto",
+    }),
+
+  text: (modal) =>
+    Config.Css.css({
+      display: "block",
+      marginLeft: modal.style.paddingLeft,
+      marginRight: modal.style.paddingRight,
+      marginTop: modal.style.paddingTop,
+      marginBottom: modal.style.paddingTop,
+    }),
+
+  infoLine: (modal) =>
+    Config.Css.css({
+      display: "block",
+      marginLeft: modal.style.paddingLeft,
+      marginTop: 8,
+    }),
+
+  footer: (modal) =>
+    Config.Css.css({
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+
+      marginTop: 8,
+      paddingTop: modal.style.paddingBottom,
+      paddingBottom: modal.style.paddingBottom,
+      paddingLeft: modal.style.paddingLeft,
+      paddingRight: modal.style.paddingRight,
+    }),
+
+  photo: () =>
+    Config.Css.css({
+      marginRight: 8,
+    }),
+};
+
 const CreateForm = createVisualComponent({
   //@@viewOn:statics
   uu5Tag: Config.TAG + "CreateForm",
@@ -31,7 +80,7 @@ const CreateForm = createVisualComponent({
     return (
       <Modal header="Create shopping list" onClose={props.onClose} open>
         {(modal) => (
-          <Form {...elementProps} onSubmit={props.onSubmit}>
+          <Form {...elementProps} onSubmit={props.onSubmit} className={Css.content}>
           <FormText name="name" label="Name" required />
           <FormText name="description" label="Description" required />
           <FormLink name="imageUrl" label="Insert Image URL path"/>
