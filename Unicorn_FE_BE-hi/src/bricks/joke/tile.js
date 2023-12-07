@@ -74,6 +74,13 @@ function InfoLine({ children }) {
     </Text>
   );
 }
+
+function hasManagePermission(shoppingList, identity, profileList) {
+  const isAuthority = profileList.includes("Authorities");
+  const isExecutive = profileList.includes("Executives");
+  const isOwner = shoppingList.uuIdentity === identity.uuIdentity;
+  return isAuthority || (isExecutive && isOwner);
+}
 //@@viewOff:helpers
 
 const Tile = createVisualComponent({
@@ -141,6 +148,7 @@ const Tile = createVisualComponent({
     //@@viewOn:render
     const { elementProps } = Utils.VisualComponent.splitProps(props, Css.main());
     const shoppingList = props.shoppingListDataObject.data;
+    //const canManage = hasManagePermission(shoppingList, props.identity, props.profileList);
     const isActionDisabled = props.shoppingListDataObject.state === "pending";
 
     return (
@@ -170,6 +178,8 @@ const Tile = createVisualComponent({
         {shoppingList.categoryIdList?.length > 0 && <InfoLine>{buildCategoryNames(shoppingList.categoryIdList)}</InfoLine>}
 
         <InfoLine>{shoppingList.id}</InfoLine>
+        <InfoLine>{props.identity}</InfoLine>
+        <InfoLine>{props.profileList}</InfoLine>
         <InfoLine>{shoppingList.uuIdentityName}</InfoLine>
 
         <InfoLine>
@@ -178,10 +188,13 @@ const Tile = createVisualComponent({
 
         <Box significance="distinct" className={Css.footer()}>
           {`Average rating: ${shoppingList.averageRating.toFixed(shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
-          <div>
-            <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" disabled={isActionDisabled}/>
-            <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" disabled={isActionDisabled}/>
-          </div>
+          {//canManage (
+            <div>
+              <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" disabled={isActionDisabled}/>
+              <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" disabled={isActionDisabled}/>
+            </div>
+          //)
+        };
         </Box>
       </Box>
     );
