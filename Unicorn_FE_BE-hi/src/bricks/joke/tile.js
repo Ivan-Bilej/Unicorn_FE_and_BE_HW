@@ -1,6 +1,6 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils, useRoute } from "uu5g05";
-import { Box, Text, Line, Button, DateTime } from "uu5g05-elements";
+import { createVisualComponent, PropTypes, Utils, useEffect, useRoute } from "uu5g05";
+import { Box, Text, Line, Button, DateTime, Pending } from "uu5g05-elements";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -82,7 +82,7 @@ const Tile = createVisualComponent({
   //@@viewOff:statics
 
    //@@viewOn:propTypes
-   propTypes: {
+   /*propTypes: {
     shoppingList: PropTypes.shape({
       name: PropTypes.string.isRequired,
       text: PropTypes.string,
@@ -93,6 +93,12 @@ const Tile = createVisualComponent({
         cts: PropTypes.string,
       }),
     }).isRequired,
+    onUpdate: PropTypes.func,
+    onDelete: PropTypes.func,
+  },*/
+
+  propTypes: {
+    shoppingListDataObject: PropTypes.object.isRequired,
     onUpdate: PropTypes.func,
     onDelete: PropTypes.func,
   },
@@ -106,16 +112,25 @@ const Tile = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
-    const { elementProps } = Utils.VisualComponent.splitProps(props, Css.main());
-    const [, setRoute] = useRoute();
+    useEffect(() => {
+      if (
+        props.shoppingListDataObject.data.image &&
+        !props.shoppingListDataObject.data.imageUrl &&
+        props.shoppingListDataObject.state === "ready" &&
+        props.shoppingListDataObject.handlerMap?.getImage
+      ) {
+        props.shoppingListDataObject.handlerMap
+          .getImage(props.shoppingListDataObject.data)
+          .catch((error) => Tile.logger.error("Error loading image", error));
+      }
+    }, [props.shoppingListDataObject]);
 
-    //@@viewOn:private
-    function handleDelete(event) {
-      props.onDelete(new Utils.Event(props.shoppingList, event));
+    function handleDelete() {
+      props.onDelete(props.shoppingListDataObject);
     }
 
-    function handleUpdate(event) {
-      props.onUpdate(new Utils.Event(props.shoppingList, event));
+    function handleUpdate() {
+      props.onUpdate(props.shoppingListDataObject);
     }
 
     function handleDetail() {
@@ -123,40 +138,48 @@ const Tile = createVisualComponent({
     }
     //@@viewOff:private
     
+    //@@viewOn:render
+    const { elementProps } = Utils.VisualComponent.splitProps(props, Css.main());
+    const shoppingList = props.shoppingListDataObject.data;
+    const isActionDisabled = props.shoppingListDataObject.state === "pending";
 
     return (
       <Box {...elementProps} onClick={handleDetail}>
         <Text category="interface" segment="title" type="minor" colorScheme="building" className={Css.header()}>
-          {props.shoppingList.name}
+          {shoppingList.name}
         </Text>
+
+        
         <div>
           <Text category="interface" segment="content" type="medium" colorScheme="building" className={Css.text()}>
-            {props.shoppingList.description}
+            {shoppingList.description}
           </Text>
         </div>
-        <div className={Css.content(props.shoppingList.image)}>
-          {props.shoppingList.text && !props.shoppingList.image && (
+
+        <div className={Css.content(shoppingList.image)}>
+          {shoppingList.text && !shoppingList.image && (
             <Text category="interface" segment="content" type="medium" colorScheme="building" className={Css.text()}>
-              {props.shoppingList.text}
+              {shoppingList.text}
             </Text>
           )}
-          {props.shoppingList.imageUrl && <img src={props.shoppingList.imageUrl} alt={props.shoppingList.name} className={Css.image()} />}
+          {shoppingList.imageUrl && <img src={shoppingList.imageUrl} alt={shoppingList.name} className={Css.image()} />}
+          {shoppingList.image && !shoppingList.imageUrl && <Pending size="xl" />}
         </div>
 
         <Line significance="subdued" />
-        <InfoLine>{props.shoppingList.id}</InfoLine>
-        <InfoLine>{props.shoppingList.uuIdentityName}</InfoLine>
 
+        <InfoLine>{shoppingList.id}</InfoLine>
+        <InfoLine>{shoppingList.uuIdentityName}</InfoLine>
 
         <InfoLine>
-          <DateTime value={props.shoppingList.sys.cts} dateFormat="short" timeFormat="none" />
+          <DateTime value={shoppingList.sys.cts} dateFormat="short" timeFormat="none" />
         </InfoLine>
 
         <Box significance="distinct" className={Css.footer()}>
-          {`Average rating: ${props.shoppingList.averageRating.toFixed(props.shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
+          {`Average rating: ${shoppingList.averageRating.toFixed(shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
           <div>
-            <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" />
-            <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" />
+            <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" disabled={isActionDisabled}/>
+            <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" disabled={isActionDisabled}/>
           </div>
         </Box>
       </Box>

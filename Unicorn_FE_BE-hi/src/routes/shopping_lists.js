@@ -1,6 +1,6 @@
 //@@viewOn:imports
 import { createVisualComponent } from "uu5g05";
-import { withRoute } from "uu_plus4u5g02-app";
+import { withRoute, RouteController } from "uu_plus4u5g02-app";
 import Config from "./config/config.js";
 import RouteBar from "../core/route-bar.js";
 import ListTitle from "../bricks/joke/list-title.js";
@@ -8,6 +8,13 @@ import ListProvider from "../bricks/joke/list-provider.js";
 import ListView from "../bricks/joke/list-view.js";
 import CreateView from "../bricks/joke/create-view.js";
 //@@viewOff:imports
+
+//@@viewOn:css
+const Css = {
+  container: () => Config.Css.css({ maxWidth: 640, margin: "0px auto" }),
+  createView: () => Config.Css.css({ margin: "24px 0px" }),
+};
+//@@viewOff:css
 
 let ShoppingLists = createVisualComponent({
   //@@viewOn:statics
@@ -20,12 +27,14 @@ let ShoppingLists = createVisualComponent({
       <>
         <RouteBar />
         <ListProvider>
-          {({ shoppingLists, remove, update, create }) => (
-            <>
-              <CreateView onCreate={create} style={{ maxWidth: 400, margin: "24px auto", display: "block" }} />
-              <ListView shoppingLists={shoppingLists} onDelete={remove} onUpdate={update} />
-              <ListTitle shoppingLists={shoppingLists} />
-            </>
+          {(shoppingListDataList) => (
+            <RouteController routeDataObject={shoppingListDataList}>
+            <div className={Css.container()}>
+              <CreateView shoppingListDataList={shoppingListDataList} className={Css.createView()} />
+              <ListView shoppingListDataList={shoppingListDataList} />
+              <ListTitle shoppingListList={shoppingListDataList.data} />
+            </div>
+          </RouteController>
           )}
         </ListProvider>
       </>

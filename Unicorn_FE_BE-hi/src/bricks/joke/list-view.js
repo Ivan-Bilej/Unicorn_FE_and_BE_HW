@@ -1,8 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils, Content } from "uu5g05";
-import { useAlertBus } from "uu5g05-elements";
+import { createVisualComponent, PropTypes, Utils, Content, useRef } from "uu5g05";
+import { Button, Pending, useAlertBus } from "uu5g05-elements";
 import Tile from "./tile";
 import Config from "./config/config.js";
+//import ShoppingLists from "../../routes/shopping_lists.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -10,7 +11,8 @@ import Config from "./config/config.js";
 
 //@@viewOn:css
 const Css = {
-  main: () => Config.Css.css({}),
+  tile: () => Config.Css.css({ marginBottom: 24 }),
+  buttonArea: () => Config.Css.css({ textAlign: "center", marginBottom: 24 }),
 };
 //@@viewOff:css
 
@@ -25,23 +27,18 @@ const ListView = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    shoppingLists: PropTypes.array.isRequired,
-    onUpdate: PropTypes.func,
-    onDelete: PropTypes.func,
+    shoppingListDataList: PropTypes.object.isRequired,
   },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
-  defaultProps: {
-    shoppingLists: [],
-    onUpdate: () => {},
-    onDelete: () => {},
-  },
+  defaultProps: {},
   //@@viewOff:defaultProps
 
   render(props) {
     //@@viewOn:private
     const { addAlert } = useAlertBus();
+    const nextPageIndexRef = useRef(1);
 
     function showError(error, header = "") {
       addAlert({
@@ -51,47 +48,66 @@ const ListView = createVisualComponent({
       });
     }
 
-    function handleDelete(event) {
-      const shoppingList = event.data;
-
+    async function handleDelete(shoppingListDataObject) {
       try {
-        props.onDelete(shoppingList);
-        addAlert({
-          message: `The shoppingList ${shoppingList.name} has been deleted.`,
-          priority: "success",
-          durationMs: 3000,
-        });
+        await shoppingListDataObject.handlerMap.delete();
       } catch (error) {
-        ListView.logger.error("Error deleting shoppingList", error);
-        showError(error, "shoppingList delete failed!");
+        ListView.logger.error("Error deleting shopping list", error);
+        showError(error, "Shopping list delete failed!");
+        return;
+      }
+
+      addAlert({
+        message: `The shopping list ${shoppingListDataObject.data.name} has been deleted.`,
+        priority: "success",
+        durationMs: 2000,
+      });
+    }
+
+    async function handleUpdate(shoppingListDataObject) {
+      try {
+        await shoppingListDataObject.handlerMap.update();
+      } catch (error) {
+        ListView.logger.error("Error updating shopping list", error);
+        showError(error, "Shopping list update failed!");
       }
     }
 
-    function handleUpdate(event) {
+    async function handleLoadNext() {
       try {
-        props.onUpdate(event.data);
+        await props.shoppingListDataList.handlerMap.loadNext({ pageInfo: { pageIndex: nextPageIndexRef.current } });
+        nextPageIndexRef.current++;
       } catch (error) {
-        ListView.logger.error("Error updating shoppingList", error);
-        showError(error, "shoppingList update failed!");
+        ListView.logger.error("Error loading next page", error);
+        showError(error, "Page loading failed!");
       }
     }
     //@@viewOff:private
 
 
     //@@viewOn:render
-    const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
+    const attrs = Utils.VisualComponent.getAttrs(props);
+    const shoppingListList = props.shoppingListDataList.data.filter((item) => item !== undefined);
 
     return (
       <div {...attrs}>
-        {props.shoppingLists.map((shoppingList) => (
+        {shoppingListList.map((item) => (
           <Tile
-            key={shoppingList.id}
-            shoppingList={shoppingList}
+            key={item.data.id}
+            shoppingListDataObject={item}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
-            style={{ width: 640, margin: "24px auto" }}
+            className={Css.tile()}
           />
         ))}
+        <div className={Css.buttonArea()}>
+          {props.shoppingListDataList.state !== "pending" && (
+            <Button colorScheme="primary" onClick={handleLoadNext}>
+              Load next 3 shopping lists
+            </Button>
+          )}
+          {props.shoppingListDataList.state === "pending" && <Pending />}
+        </div>
       </div>
     );
     //@@viewOff:render

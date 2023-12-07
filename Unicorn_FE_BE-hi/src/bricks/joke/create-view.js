@@ -5,6 +5,12 @@ import CreateForm from "./create-form.js";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
+//@@viewOn:css
+const Css = {
+  button: () => Config.Css.css({ display: "block", margin: "0px auto" }),
+};
+//@@viewOff:css
+
 //@@viewOn:constants
 const Mode = {
   BUTTON: "BUTTON",
@@ -44,14 +50,20 @@ const CreateView = createVisualComponent({
     const { addAlert } = useAlertBus();
     const [mode, setMode] = useState(Mode.BUTTON);
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
       let shoppingList;
 
       try {
-        shoppingList = props.onCreate(event.data.value);
+        shoppingList = await props.shoppingListDataList.handlerMap.create(event.data.value);
       } catch (error) {
         // We pass Error.Message instance to the Uu5Forms.Form that shows alert
-        throw new Utils.Error.Message("shoppingList create failed!", error);
+        CreateView.logger.error("Error while creating shopping list", error);
+        addAlert({
+          header: "Shopping list creation failed!",
+          message: error.message,
+          priority: "error",
+        });
+        return;
       }
 
       addAlert({
@@ -61,18 +73,24 @@ const CreateView = createVisualComponent({
       });
 
       setMode(Mode.BUTTON);
+      props.shoppingListDataList.handlerMap.load();
     }
     //@@viewOff:private
 
     //@@viewOn:render
-    const { elementProps } = Utils.VisualComponent.splitProps(props);
+    const attrs = Utils.VisualComponent.getAttrs(props);
+    let content;
 
     switch (mode) {
       case Mode.BUTTON:
-        return <CreateButton {...elementProps} onClick={() => setMode(Mode.FORM)} />;
+        content = <CreateButton onClick={() => setMode(Mode.FORM)} />;
+        break
       default:
-        return <CreateForm {...elementProps} onSubmit={handleSubmit} onCancel={() => setMode(Mode.BUTTON)} />;
+        content = <CreateForm onSubmit={handleSubmit} onCancel={() => setMode(Mode.BUTTON)} />;
+        break
     }
+
+    return <div {...attrs}>{content}</div>;
     //@@viewOff:render
   },
 });

@@ -57,14 +57,65 @@ const ListProvider = createComponent({
 
   render(props) {
     //@@viewOn:private
-    const [shoppingLists, setshoppingLists] = useState(initialShoppingLists
-    );
+    const shoppingListDataList = useDataList({
+      handlerMap: {
+        load: handleLoad,
+        loadNext: handleLoadNext,
+        create: handleCreate,
+      },
+      itemHandlerMap: {
+        update: handleUpdate,
+        delete: handleDelete,
+        getImage: handleGetImage,
+      },
+      pageSize: 3,
+    });
 
+    const imageUrlListRef = useRef([]);
 
-    function remove(shoppingList) {
-      setshoppingLists((prevshoppingLists) => prevshoppingLists.filter((item) => item.id !== shoppingList.id));
+    function handleLoad(dtoIn) {
+      return Calls.ShoppingList.list(dtoIn);
     }
 
+    function handleLoadNext(dtoIn) {
+      return Calls.ShoppingList.list(dtoIn);
+    }
+
+    function handleCreate(values) {
+      return Calls.ShoppingList.create(values);
+    }
+
+    async function handleUpdate() {
+      throw new Error("Shopping list update is not implemented yet.");
+    }
+
+    function handleDelete(shoppingList) {
+      const dtoIn = { id: shoppingList.id };
+      return Calls.ShoppingList.delete(dtoIn, props.baseUri);
+    }
+
+    async function handleGetImage(shoppingList) {
+      const dtoIn = { code: shoppingList.image };
+      const imageFile = await Calls.ShoppingList.getImage(dtoIn);
+      const imageUrl = generateAndRegisterImageUrl(imageFile);
+      return { ...shoppingList, imageFile, imageUrl };
+    }
+
+    function generateAndRegisterImageUrl(imageFile) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      imageUrlListRef.current.push(imageUrl);
+      return imageUrl;
+    }
+
+    useEffect(() => {
+      // We don't use it to store reference on another React component
+      // eslint-disable-next-line uu5/hooks-exhaustive-deps
+      return () => imageUrlListRef.current.forEach((url) => URL.revokeObjectURL(url));
+      // We want to trigger this effect only once.
+      // eslint-disable-next-line uu5/hooks-exhaustive-deps
+    }, []);
+
+    /*
     function create(values) {
       const shoppingList = {
         ...values,
@@ -84,10 +135,12 @@ const ListProvider = createComponent({
       throw new Error("shoppingList update is not implemented yet.");
     }
     //@@viewOff:private
+    
 
     //@@viewOn:render
     const value = { shoppingLists, remove, update, create };
-    return typeof props.children === "function" ? props.children(value) : props.children;
+    */
+    return typeof props.children === "function" ? props.children(shoppingListDataList) : props.children;
     //@@viewOff:render
   },
 });
