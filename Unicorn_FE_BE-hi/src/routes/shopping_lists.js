@@ -1,6 +1,7 @@
 //@@viewOn:imports
-import { createVisualComponent } from "uu5g05";
+import { createVisualComponent, useSession } from "uu5g05";
 import { withRoute, RouteController } from "uu_plus4u5g02-app";
+import { useSubAppData, useSystemData } from "uu_plus4u5g02";
 import Config from "./config/config.js";
 import RouteBar from "../core/route-bar.js";
 import ListTitle from "../bricks/joke/list-title.js";
@@ -22,6 +23,15 @@ let ShoppingLists = createVisualComponent({
   //@@viewOff:statics
 
   render() {
+    //@@viewOn:private
+    const subAppDataObject = useSubAppData();
+    const systemDataObject = useSystemData();
+    const { identity } = useSession();
+    
+    const profileList = systemDataObject.data.profileData.uuIdentityProfileList;
+    const canCreate = profileList.includes("Authorities") || profileList.includes("Executives");
+    //@@viewOff:private
+    
     //@@viewOn:render
     return (
       <>
@@ -30,8 +40,13 @@ let ShoppingLists = createVisualComponent({
           {(shoppingListDataList) => (
             <RouteController routeDataObject={shoppingListDataList}>
             <div className={Css.container()}>
-              <CreateView shoppingListDataList={shoppingListDataList} className={Css.createView()} />
-              <ListView shoppingListDataList={shoppingListDataList} />
+              {canCreate && <CreateView shoppingListDataList={shoppingListDataList} className={Css.createView()} />}
+              <ListView 
+                shoppingListDataList={shoppingListDataList} 
+                categoryList={subAppDataObject.data.categoryList}
+                profileList={profileList}
+                identity={identity}
+              />
               <ListTitle shoppingListList={shoppingListDataList.data} />
             </div>
           </RouteController>

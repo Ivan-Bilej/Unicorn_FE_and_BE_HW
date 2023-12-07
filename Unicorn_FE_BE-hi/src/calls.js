@@ -56,6 +56,11 @@ const Calls = {
       const commandUri = Calls.getCommandUri("uu-app-binarystore/getBinaryData");
       return Calls.call("get", commandUri, dtoIn);
     },
+
+    load(dtoIn) {
+      const commandUri = Calls.getCommandUri("sys/uuAppWorkspace/load");
+      return Calls.call("get", commandUri, dtoIn);
+    },
   },
 
   getCommandUri(useCase) {

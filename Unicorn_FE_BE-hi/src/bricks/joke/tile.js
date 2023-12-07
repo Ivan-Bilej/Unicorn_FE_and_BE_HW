@@ -82,23 +82,9 @@ const Tile = createVisualComponent({
   //@@viewOff:statics
 
    //@@viewOn:propTypes
-   /*propTypes: {
-    shoppingList: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      text: PropTypes.string,
-      imageUrl: PropTypes.string,
-      averageRating: PropTypes.number.isRequired,
-      uuIdentityName: PropTypes.string.isRequired,
-      sys: PropTypes.shape({
-        cts: PropTypes.string,
-      }),
-    }).isRequired,
-    onUpdate: PropTypes.func,
-    onDelete: PropTypes.func,
-  },*/
-
   propTypes: {
     shoppingListDataObject: PropTypes.object.isRequired,
+    categoryList: PropTypes.array,
     onUpdate: PropTypes.func,
     onDelete: PropTypes.func,
   },
@@ -106,6 +92,7 @@ const Tile = createVisualComponent({
 
   //@@viewOn:defaultProps
   defaultProps: {
+    categoryList: [],
     onUpdate: () => {},
     onDelete: () => {},
   },
@@ -133,6 +120,19 @@ const Tile = createVisualComponent({
       props.onUpdate(props.shoppingListDataObject);
     }
 
+    function buildCategoryNames(categoryIdList) {
+      // for faster lookup
+      let categoryIds = new Set(categoryIdList);
+      return props.categoryList
+        .reduce((acc, category) => {
+          if (categoryIds.has(category.id)) {
+            acc.push(category.name);
+          }
+          return acc;
+        }, [])
+        .join(", ");
+    }
+
     function handleDetail() {
       //Will be added later after some testing
     }
@@ -149,7 +149,6 @@ const Tile = createVisualComponent({
           {shoppingList.name}
         </Text>
 
-        
         <div>
           <Text category="interface" segment="content" type="medium" colorScheme="building" className={Css.text()}>
             {shoppingList.description}
@@ -167,6 +166,8 @@ const Tile = createVisualComponent({
         </div>
 
         <Line significance="subdued" />
+
+        {shoppingList.categoryIdList?.length > 0 && <InfoLine>{buildCategoryNames(shoppingList.categoryIdList)}</InfoLine>}
 
         <InfoLine>{shoppingList.id}</InfoLine>
         <InfoLine>{shoppingList.uuIdentityName}</InfoLine>

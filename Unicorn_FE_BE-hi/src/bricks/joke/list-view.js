@@ -98,6 +98,7 @@ const ListView = createVisualComponent({
             onDelete={handleDelete}
             onUpdate={handleUpdate}
             className={Css.tile()}
+            categoryList={props.categoryList} // This line has been added
           />
         ))}
         <div className={Css.buttonArea()}>
