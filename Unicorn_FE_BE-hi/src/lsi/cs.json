@@ -31,14 +31,37 @@
   },
   "UnicornFEBE.Bricks.Joke.CreateForm": {
     "name": "Název",
+    "item": "Položka",
+    "image": "Obrázek",
+    "imageUrl": "URL adresa obrázku",
     "description": "Popis",
     "cancel": "Zrušit",
-    "submit": "Vytvořit nákupní seznam"
+    "submit": "Vytvořit nákupní seznam",
+    "textOrImage": "Text nebo obrázek musí být vyplněn."
   },
   "UnicornFEBE.Bricks.Joke.CreateView": {
     "createShoppingList": "Přidat nákupní seznam",
     "createFail": "Vytvoření nákupního seznamu selhalo!",
     "createDone": "Nákupní seznam {0} byl vytvořen."
+  },
+  "UnicornFEBE.Bricks.Joke.DetailModal": {
+    "oneVotes": "{0} hlas",
+    "fewVotes": "{0} hlasy",
+    "otherVotes": "{0} hlasů",
+    "averageRating": "Hodnocení: {0} / 5",
+    "update": "Upravit",
+    "delete": "Smazat"
+  },
+  "UnicornFEBE.Bricks.Joke.UpdateModal": {
+    "header": "Upravit vtip",
+    "name": "Název",
+    "item": "Položka",
+    "image": "Obrázek",
+    "imageUrl": "URL adresa obrázku",
+    "description": "Popis",
+    "cancel": "Zrušit",
+    "submit": "Upravit",
+    "textOrImage": "Text nebo obrázek musí být vyplněn."
   },
   "UnicornFEBE.Bricks.Joke.ListView": {
     "deleteDone": "Nákupní seznam {0} byl smazán.",

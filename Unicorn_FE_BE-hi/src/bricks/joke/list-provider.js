@@ -46,7 +46,8 @@ const ListProvider = createComponent({
       return Calls.ShoppingList.list(dtoIn);
     }
 
-    function handleLoadNext(dtoIn) {
+    function handleLoadNext(pageInfo) {
+      const dtoIn = { pageInfo };
       return Calls.ShoppingList.list(dtoIn);
     }
 
@@ -54,8 +55,8 @@ const ListProvider = createComponent({
       return Calls.ShoppingList.create(values);
     }
 
-    async function handleUpdate() {
-      throw new Error("Shopping list update is not implemented yet.");
+    async function handleUpdate(values) {
+      return Calls.Joke.update(values);
     }
 
     function handleDelete(shoppingList) {

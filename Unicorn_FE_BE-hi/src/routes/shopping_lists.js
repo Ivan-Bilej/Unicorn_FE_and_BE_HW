@@ -44,17 +44,22 @@ let ShoppingLists = createVisualComponent({
         <ListProvider>
           {(shoppingListDataList) => (
             <RouteController routeDataObject={shoppingListDataList}>
-            <div className={Css.container()}>
-              {canCreate && <CreateView shoppingListDataList={shoppingListDataList} className={Css.createView()} />}
-              <ListView 
-                shoppingListDataList={shoppingListDataList} 
-                itemList={subAppDataObject.data.itemList}
-                profileList={profileList}
-                identity={identity}
-              />
-              <ListTitle shoppingListList={shoppingListDataList.data} />
-            </div>
-          </RouteController>
+              <div className={Css.container()}>
+                {canCreate && 
+                  <CreateView 
+                    shoppingListDataList={shoppingListDataList} 
+                    itemList={subAppDataObject.data.itemList}
+                    className={Css.createView()} 
+                  />}
+                <ListView 
+                  shoppingListDataList={shoppingListDataList} 
+                  itemList={subAppDataObject.data.itemList}
+                  profileList={profileList}
+                  identity={identity}
+                />
+                <ListTitle shoppingListList={shoppingListDataList.data} />
+              </div>
+            </RouteController>
           )}
         </ListProvider>
       </>

@@ -32,13 +32,36 @@
     "UnicornFEBE.Bricks.Joke.CreateForm": {
       "name": "Name",
       "description": "Text",
+      "item": "Item",
+      "image": "Image",
+      "imageUrl": "URL of the image",
       "cancel": "Cancel",
-      "submit": "Create shopping list"
+      "submit": "Create shopping list",
+      "textOrImage": "Text or image must be provided."
     },
     "UnicornFEBE.Bricks.Joke.CreateView": {
       "createShoppingList": "Add shopping list",
       "createFail": "Shopping list creation failed!",
       "createDone": "Shopping list {0} has been created."
+    },
+    "UnicornFEBE.Bricks.Joke.DetailModal": {
+        "oneVotes": "{0} vote",
+        "fewVotes": "{0} votes",
+        "otherVotes": "{0} votes",
+        "averageRating": "Rating: {0} / 5",
+        "update": "Update",
+        "delete": "Delete"
+    },
+    "UnicornFEBE.Bricks.Joke.UpdateModal": {
+        "header": "Update shopping list",
+        "name": "Name",
+        "description": "Text",
+        "item": "Item",
+        "image": "Image",
+        "imageUrl": "URL of the image",
+        "cancel": "Cancel",
+        "submit": "Update",
+        "textOrImage": "Text or image must be provided."
     },
     "UnicornFEBE.Bricks.Joke.ListView": {
       "deleteDone": "The shopping list {0} has been deleted.",

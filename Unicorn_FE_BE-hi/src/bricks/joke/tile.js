@@ -105,9 +105,7 @@ const Tile = createVisualComponent({
 
   //@@viewOn:defaultProps
   defaultProps: {
-    itemList: [],
-    onUpdate: () => {},
-    onDelete: () => {},
+    itemList: []
   },
   //@@viewOff:defaultProps
 
@@ -128,12 +126,18 @@ const Tile = createVisualComponent({
       }
     }, [props.shoppingListDataObject]);
 
-    function handleDelete() {
+    function handleDelete(event) {
+      event.stopPropagation();
       props.onDelete(props.shoppingListDataObject);
     }
 
-    function handleUpdate() {
+    function handleUpdate(event) {
+      event.stopPropagation();
       props.onUpdate(props.shoppingListDataObject);
+    }
+
+    function handleDetail() {
+      props.onDetail(props.shoppingListDataObject);
     }
 
     function buildItemNames(itemIdList) {
@@ -147,10 +151,6 @@ const Tile = createVisualComponent({
           return acc;
         }, [])
         .join(", ");
-    }
-
-    function handleDetail() {
-      //Will be added later after some testing
     }
     //@@viewOff:private
     

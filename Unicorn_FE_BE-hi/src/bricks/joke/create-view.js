@@ -22,8 +22,8 @@ const Mode = {
 //@@viewOn:helpers
 function CreateButton(props) {
   return (
-    <Button {...props} colorScheme="primary" significance="highlighted">
-      Create shopping list
+    <Button {...props} colorScheme="primary" significance="highlighted" className={Css.button()}>
+      {props.children}
     </Button>
   );
 }
@@ -36,13 +36,14 @@ const CreateView = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
+    itemList: PropTypes.array,
     onCreate: PropTypes.func,
   },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
   defaultProps: {
-    onCreate: () => {},
+    itemList: [],
   },
   //@@viewOff:defaultProps
 
@@ -51,7 +52,6 @@ const CreateView = createVisualComponent({
     const { addAlert } = useAlertBus();
     const [mode, setMode] = useState(Mode.BUTTON);
     const lsi = useLsi(importLsi, [CreateView.uu5Tag]);
-    console.log(CreateView.uu5Tag)
 
     async function handleSubmit(event) {
       let shoppingList;
@@ -89,7 +89,8 @@ const CreateView = createVisualComponent({
         content = <CreateButton onClick={() => setMode(Mode.FORM)}>{lsi.createShoppingList}</CreateButton>;
         break
       default:
-        content = <CreateForm onSubmit={handleSubmit} onCancel={() => setMode(Mode.BUTTON)} />;
+        content = 
+          <CreateForm onSubmit={handleSubmit} onCancel={() => setMode(Mode.BUTTON)} itemList={props.itemList}/>;
         break
     }
 
