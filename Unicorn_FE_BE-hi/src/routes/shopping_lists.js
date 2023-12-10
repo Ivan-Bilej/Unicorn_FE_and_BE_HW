@@ -48,7 +48,7 @@ let ShoppingLists = createVisualComponent({
               {canCreate && <CreateView shoppingListDataList={shoppingListDataList} className={Css.createView()} />}
               <ListView 
                 shoppingListDataList={shoppingListDataList} 
-                categoryList={subAppDataObject.data.categoryList}
+                itemList={subAppDataObject.data.itemList}
                 profileList={profileList}
                 identity={identity}
               />

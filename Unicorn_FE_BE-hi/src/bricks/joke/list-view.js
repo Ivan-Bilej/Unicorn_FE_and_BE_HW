@@ -34,14 +34,14 @@ const ListView = createVisualComponent({
      * */
     //identity: PropTypes.object.isRequired,
     identity: PropTypes.string.isRequired,
-    categoryList: PropTypes.array,
+    itemList: PropTypes.array,
     profileList: PropTypes.array,
   },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
   defaultProps: {
-    categoryList: [],
+    itemList: [],
     profileList: [],
   },
   //@@viewOff:defaultProps
@@ -111,7 +111,7 @@ const ListView = createVisualComponent({
             onDelete={handleDelete}
             onUpdate={handleUpdate}
             className={Css.tile()}
-            categoryList={props.categoryList} // This line has been added
+            itemList={props.itemList} // This line has been added
           />
         ))}
         <div className={Css.buttonArea()}>

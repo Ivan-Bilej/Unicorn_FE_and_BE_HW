@@ -78,7 +78,14 @@ function InfoLine({ children }) {
 function hasManagePermission(shoppingList, identity, profileList) {
   const isAuthority = profileList.includes("Authorities");
   const isExecutive = profileList.includes("Executives");
-  const isOwner = shoppingList.uuIdentity === identity.uuIdentity;
+  /**
+     * REMOVE "//" AFTER useSession WORKS AND uuApp LOGIN WORKS
+     * REMOVE LINE "const { identity } = {identitiy: "6565-1"}"
+     * */
+  //const isOwner = shoppingList.uuIdentity === identity.uuIdentity;
+  const isOwner = shoppingList.uuIdentity === identity;
+  console.log(identity)
+  console.log(isOwner)
   return isAuthority || (isExecutive && isOwner);
 }
 //@@viewOff:helpers
@@ -91,7 +98,7 @@ const Tile = createVisualComponent({
    //@@viewOn:propTypes
   propTypes: {
     shoppingListDataObject: PropTypes.object.isRequired,
-    categoryList: PropTypes.array,
+    itemList: PropTypes.array,
     onUpdate: PropTypes.func,
     onDelete: PropTypes.func,
   },
@@ -99,7 +106,7 @@ const Tile = createVisualComponent({
 
   //@@viewOn:defaultProps
   defaultProps: {
-    categoryList: [],
+    itemList: [],
     onUpdate: () => {},
     onDelete: () => {},
   },
@@ -127,13 +134,13 @@ const Tile = createVisualComponent({
       props.onUpdate(props.shoppingListDataObject);
     }
 
-    function buildCategoryNames(categoryIdList) {
+    function buildItemNames(itemIdList) {
       // for faster lookup
-      let categoryIds = new Set(categoryIdList);
-      return props.categoryList
-        .reduce((acc, category) => {
-          if (categoryIds.has(category.id)) {
-            acc.push(category.name);
+      let itemIds = new Set(itemIdList);
+      return props.itemList
+        .reduce((acc, item) => {
+          if (itemIds.has(item.id)) {
+            acc.push(item.name);
           }
           return acc;
         }, [])
@@ -148,7 +155,7 @@ const Tile = createVisualComponent({
     //@@viewOn:render
     const { elementProps } = Utils.VisualComponent.splitProps(props, Css.main());
     const shoppingList = props.shoppingListDataObject.data;
-    //const canManage = hasManagePermission(shoppingList, props.identity, props.profileList);
+    const canManage = hasManagePermission(shoppingList, props.identity, props.profileList);
     const isActionDisabled = props.shoppingListDataObject.state === "pending";
 
     return (
@@ -175,7 +182,7 @@ const Tile = createVisualComponent({
 
         <Line significance="subdued" />
 
-        {shoppingList.categoryIdList?.length > 0 && <InfoLine>{buildCategoryNames(shoppingList.categoryIdList)}</InfoLine>}
+        {shoppingList.itemIdList?.length > 0 && <InfoLine>{buildItemNames(shoppingList.itemIdList)}</InfoLine>}
 
         <InfoLine>{shoppingList.id}</InfoLine>
         <InfoLine>{props.identity}</InfoLine>
@@ -188,12 +195,12 @@ const Tile = createVisualComponent({
 
         <Box significance="distinct" className={Css.footer()}>
           {`Average rating: ${shoppingList.averageRating.toFixed(shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
-          {//canManage (
+          {canManage && (
             <div>
               <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" disabled={isActionDisabled}/>
               <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" disabled={isActionDisabled}/>
             </div>
-          //)
+          )
         };
         </Box>
       </Box>

@@ -8,10 +8,10 @@
       "rev": 4
     },
     "state": "active",
-    "name": "Demo uuJokes",
-    "categoryList": [
+    "name": "Demo Shopping lists",
+    "itemList": [
       {
-        "name": "Superbowl",
+        "name": "Hrášek",
         "icon": "mdi-label",
         "awid": "4ef6a7b01b5942ecbfb925b249af987f",
         "sys": {
@@ -22,7 +22,7 @@
         "id": "5db8220d008c44000d6997b2"
       },
       {
-        "name": "Personální",
+        "name": "Kukuřice",
         "icon": "mdi-account",
         "awid": "4ef6a7b01b5942ecbfb925b249af987f",
         "sys": {
@@ -33,7 +33,7 @@
         "id": "5db19f9b008c44000d6995d5"
       },
       {
-        "name": "Kamenaky",
+        "name": "Kuřecí prsa",
         "icon": "mdi-label",
         "awid": "4ef6a7b01b5942ecbfb925b249af987f",
         "sys": {
@@ -44,7 +44,7 @@
         "id": "5edf56b81d5ce800255e70f7"
       },
       {
-        "name": "JavaScript",
+        "name": "Hovězí steak",
         "icon": "mdi-language-javascript",
         "awid": "4ef6a7b01b5942ecbfb925b249af987f",
         "sys": {
@@ -55,7 +55,7 @@
         "id": "5c9237c1323cc0000c30302e"
       },
       {
-        "name": "IT",
+        "name": "Jablka",
         "icon": "mdi-label",
         "awid": "4ef6a7b01b5942ecbfb925b249af987f",
         "sys": {
@@ -66,7 +66,7 @@
         "id": "5c9237a0323cc0000c303028"
       },
       {
-        "name": "Food",
+        "name": "Citróny",
         "icon": "mdi-account-arrow-right",
         "awid": "4ef6a7b01b5942ecbfb925b249af987f",
         "sys": {
@@ -77,7 +77,7 @@
         "id": "5cf536f3323cc0000c3035cf"
       },
       {
-        "name": "Family",
+        "name": "Rajčata",
         "icon": "mdi-account-arrow-left-outline",
         "awid": "4ef6a7b01b5942ecbfb925b249af987f",
         "sys": {
