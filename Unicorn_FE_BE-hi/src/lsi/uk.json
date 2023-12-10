@@ -1,0 +1,61 @@
+{
+    "appName": "Додаток UnicornFEBE",
+    "About": {
+      "header": "Про додаток UnicornFEBE",
+      "creatorsHeader": "Творці додатку",
+      "termsOfUse": "Умови використання"
+    },
+    "AboutContent": {
+      "content": "<uu5string/>Демо-додаток — це шаблон для розробки нових додатків.",
+      "technologiesContent": "<uu5string/>Інші використовувані технології: <Uu5Elements.Link href='http://www.w3schools.com/html/default.asp' target='_blank'>Html5</Uu5Elements.Link>, <Uu5Elements.Link href='http://www.w3schools.com/css/default.asp' target='_blank'>CSS</Uu5Elements.Link>, <Uu5Elements.Link href='http://www.w3schools.com/js/default.asp' target='_blank'>JavaScript</Uu5Elements.Link>, <Uu5Elements.Link href='http://getbootstrap.com' target='_blank'>Bootstrap</Uu5Elements.Link>, <Uu5Elements.Link href='https://reactjs.org' target='_blank'>React</Uu5Elements.Link>, <Uu5Elements.Link href='https://www.ruby-lang.org' target='_blank'>Ruby</Uu5Elements.Link>, <Uu5Elements.Link href='http://puma.io' target='_blank'>Puma</Uu5Elements.Link> a <Uu5Elements.Link href='https://www.docker.com' target='_blank'>Docker</Uu5Elements.Link>. Додаток працює в <Uu5Elements.Link href='https://plus4u.net' target='_blank'>Plus4U</Uu5Elements.Link> інтернет-сервісі з використанням <Uu5Elements.Link href='https://azure.microsoft.com' target='_blank'>Microsoft Azure</Uu5Elements.Link> хмари."
+    },
+    "ControlPanel": {
+      "rightsError": "Ви не маєте достатніх прав для відображення цього компонента.",
+      "btNotConnected": "Додаток не підключений до бізнес-території."
+    },
+    "Home": {
+      "welcome": "Ласкаво просимо",
+      "intro": "<uu5string/>Цей шаблон складається з підготовленої сторони клієнта та сервера. Показані компоненти демонструють можливості та спосіб використання. Для цілей розробки додатків вони підходять для модифікації, копіювання та видалення. Докладніше про Структуру uuApp дивіться в документації&nbsp; <Uu5Elements.Link href=\"https://uuapp.plus4u.net/uu-bookkit-maing01/e884539c8511447a977c7ff070e7f2cf/book/page?code=stepByStepApp\" target=\"_blank\">uuAppDevKit</Uu5Elements.Link>.",
+      "clientSide": "<uu5string/>Бібліотеки <Uu5Elements.Link href=\"https://uuapp.plus4u.net/uu-bookkit-maing01/05ecbf4e8bca405290b1a6d4cee8813a/book\" target=\"_blank\">uu5</Uu5Elements.Link> та <Uu5Elements.Link href=\"https://uuapp.plus4u.net/uu-bookkit-maing01/83c1406c4fc541dba975941424106318/book\" target=\"_blank\">uuPlus4U5</Uu5Elements.Link> використовуються для розробки клієнтської частини",
+      "serverSide": "<uu5string/>Необхідно ініціалізувати робочий простір додатку для роботи на стороні сервера. Див. посібник <Uu5Elements.Link href=\"https://uuapp.plus4u.net/uu-bookkit-maing01/e884539c8511447a977c7ff070e7f2cf/book/page?code=stepByStepApp\" target=\"_blank\">uuApp Template Developer Guide</Uu5Elements.Link>"
+    },
+    "InitAppWorkspace": {
+      "notAuthorized": "Ви не маєте достатніх прав для використання додатку.",
+      "formHeader": "Ініціалізувати uuApp",
+      "formHeaderInfo": "<uu5string/>Ваш uuApp працює, але вимагає ініціалізації. Якщо вам потрібна допомога із заповненням цієї форми, дивіться\n<Uu5Elements.Link target=\"_blank\" href=\"#\">Документацію</Uu5Elements.Link>.",
+      "notAuthorizedForInit": "Додаток запущений, але його ще не ініціалізовано, і ви не маєте для цього достатніх прав.",
+      "uuBtLocationUriLabel": "розташування uuBusinessTerritory",
+      "uuBtLocationUriInfo": "Uri розташування на uuBt, де буде створено AWSC",
+      "nameLabel": "Назва",
+      "initialize": "Ініціалізувати"
+    },
+    "UnicornFEBE.Bricks.ShoppingList.CreateForm": {
+      "name": "Назва",
+      "text": "Текст",
+      "cancel": "Скасувати",
+      "submit": "Створити жарт"
+    },
+    "UnicornFEBE.Bricks.ShoppingList.CreateView": {
+      "createShoppingList": "Додати жарт",
+      "createFail": "Не вдалося створити жарт!",
+      "createDone": "Жарт {0} створено."
+    },
+    "UnicornFEBE.Bricks.ShoppingList.ListView": {
+      "deleteDone": "Жарт {0} видалено.",
+      "deleteFail": "Не вдалося видалити жарт!",
+      "updateFail": "Не вдалося редагувати жарт!",
+      "pageLoadFail": "Не вдалося завантажити жарти!",
+      "loadNext": "Завантажте ще 3 жарти"
+    },
+    "UnicornFEBE.Bricks.ShoppingList.Tile": {
+      "averageRating": "Середня оцінка: {0} / 5",
+      "deleteTip": "Видалити",
+      "updateTip": "Редагувати"
+    },
+    "UnicornFEBE.Core.RouteBar": {
+      "title": "Урок 15 – Багатомовність – {0}",
+      "home": "ласкаво просимо",
+      "shopping_lists": "жарти",
+      "about": "Про Додаток"
+    }
+  }
