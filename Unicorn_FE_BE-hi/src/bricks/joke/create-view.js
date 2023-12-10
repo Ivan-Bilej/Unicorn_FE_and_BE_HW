@@ -1,8 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils, useState } from "uu5g05";
+import { createVisualComponent, PropTypes, Utils, useState, useLsi } from "uu5g05";
 import { Button, useAlertBus } from "uu5g05-elements";
 import CreateForm from "./create-form.js";
 import Config from "./config/config.js";
+import importLsi from "../../lsi/import-lsi";
 //@@viewOff:imports
 
 //@@viewOn:css
@@ -49,6 +50,8 @@ const CreateView = createVisualComponent({
     //@@viewOn:private
     const { addAlert } = useAlertBus();
     const [mode, setMode] = useState(Mode.BUTTON);
+    const lsi = useLsi(importLsi, [CreateView.uu5Tag]);
+    console.log(CreateView.uu5Tag)
 
     async function handleSubmit(event) {
       let shoppingList;
@@ -59,7 +62,7 @@ const CreateView = createVisualComponent({
         // We pass Error.Message instance to the Uu5Forms.Form that shows alert
         CreateView.logger.error("Error while creating shopping list", error);
         addAlert({
-          header: "Shopping list creation failed!",
+          header: lsi.createFail,
           message: error.message,
           priority: "error",
         });
@@ -67,7 +70,7 @@ const CreateView = createVisualComponent({
       }
 
       addAlert({
-        message: `shoppingList ${shoppingList.name} has been created.`,
+        message:  Utils.String.format(lsi.createDone, shoppingList.nam),
         priority: "success",
         durationMs: 2000,
       });
@@ -83,7 +86,7 @@ const CreateView = createVisualComponent({
 
     switch (mode) {
       case Mode.BUTTON:
-        content = <CreateButton onClick={() => setMode(Mode.FORM)} />;
+        content = <CreateButton onClick={() => setMode(Mode.FORM)}>{lsi.createShoppingList}</CreateButton>;
         break
       default:
         content = <CreateForm onSubmit={handleSubmit} onCancel={() => setMode(Mode.BUTTON)} />;

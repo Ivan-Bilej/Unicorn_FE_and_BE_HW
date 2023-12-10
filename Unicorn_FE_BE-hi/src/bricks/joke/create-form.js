@@ -1,8 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils } from "uu5g05";
+import { createVisualComponent, PropTypes, Utils, useLsi } from "uu5g05";
 import { Form, FormText, SubmitButton, CancelButton, FormFile, FormLink } from "uu5g05-forms";
 import Config from "./config/config.js";
 import { Modal } from "uu5g05-elements";
+import importLsi from "../../lsi/import-lsi";
 //@@viewOff:imports
 
 //@@viewOn:css
@@ -74,6 +75,7 @@ const CreateForm = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
+    const lsi = useLsi(importLsi, [CreateForm.uu5Tag]);
     //@@viewOn:render
     const { elementProps } = Utils.VisualComponent.splitProps(props);
 
@@ -81,12 +83,12 @@ const CreateForm = createVisualComponent({
       <Modal header="Create shopping list" onClose={props.onClose} open>
         {(modal) => (
           <Form {...elementProps} onSubmit={props.onSubmit} className={Css.content}>
-          <FormText name="name" label="Name" required />
-          <FormText name="description" label="Description" required />
+          <FormText name="name" label={lsi.name} required />
+          <FormText name="description" label={lsi.description} required />
           <FormLink name="imageUrl" label="Insert Image URL path"/>
           <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", paddingTop: 8 }}>
-            <CancelButton onClick={props.onCancel}>Cancel</CancelButton>
-            <SubmitButton>Create Shopping List</SubmitButton>
+            <CancelButton onClick={props.onCancel}>{lsi.cancel}</CancelButton>
+            <SubmitButton>{lsi.submit}</SubmitButton>
           </div>
           </Form>
         )}

@@ -1,8 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils, Content, useRef } from "uu5g05";
+import { createVisualComponent, PropTypes, Utils, Content, useRef, useLsi } from "uu5g05";
 import { Button, Pending, useAlertBus } from "uu5g05-elements";
 import Tile from "./tile";
 import Config from "./config/config.js";
+import importLsi from "../../lsi/import-lsi";
 //import ShoppingLists from "../../routes/shopping_lists.js";
 //@@viewOff:imports
 
@@ -50,6 +51,7 @@ const ListView = createVisualComponent({
     //@@viewOn:private
     const { addAlert } = useAlertBus();
     const nextPageIndexRef = useRef(1);
+    const lsi = useLsi(importLsi, [ListView.uu5Tag]);
 
     function showError(error, header = "") {
       addAlert({
@@ -64,12 +66,12 @@ const ListView = createVisualComponent({
         await shoppingListDataObject.handlerMap.delete();
       } catch (error) {
         ListView.logger.error("Error deleting shopping list", error);
-        showError(error, "Shopping list delete failed!");
+        showError(error, lsi.deleteFail);
         return;
       }
 
       addAlert({
-        message: `The shopping list ${shoppingListDataObject.data.name} has been deleted.`,
+        message: Utils.String.format(lsi.deleteDone, shoppingListDataObject.data.name),
         priority: "success",
         durationMs: 2000,
       });
@@ -80,7 +82,7 @@ const ListView = createVisualComponent({
         await shoppingListDataObject.handlerMap.update();
       } catch (error) {
         ListView.logger.error("Error updating shopping list", error);
-        showError(error, "Shopping list update failed!");
+        showError(error, lsi.updateFail);
       }
     }
 
@@ -90,7 +92,7 @@ const ListView = createVisualComponent({
         nextPageIndexRef.current++;
       } catch (error) {
         ListView.logger.error("Error loading next page", error);
-        showError(error, "Page loading failed!");
+        showError(error, lsi.pageLoadFail);
       }
     }
     //@@viewOff:private
@@ -117,7 +119,7 @@ const ListView = createVisualComponent({
         <div className={Css.buttonArea()}>
           {props.shoppingListDataList.state !== "pending" && (
             <Button colorScheme="primary" onClick={handleLoadNext}>
-              Load next 3 shopping lists
+              {lsi.loadNext}
             </Button>
           )}
           {props.shoppingListDataList.state === "pending" && <Pending />}

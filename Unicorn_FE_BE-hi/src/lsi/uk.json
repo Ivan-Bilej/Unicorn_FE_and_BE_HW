@@ -29,25 +29,25 @@
       "nameLabel": "Назва",
       "initialize": "Ініціалізувати"
     },
-    "UnicornFEBE.Bricks.ShoppingList.CreateForm": {
+    "UnicornFEBE.Bricks.Joke.CreateForm": {
       "name": "Назва",
-      "text": "Текст",
+      "description": "Текст",
       "cancel": "Скасувати",
       "submit": "Створити жарт"
     },
-    "UnicornFEBE.Bricks.ShoppingList.CreateView": {
+    "UnicornFEBE.Bricks.Joke.CreateView": {
       "createShoppingList": "Додати жарт",
       "createFail": "Не вдалося створити жарт!",
       "createDone": "Жарт {0} створено."
     },
-    "UnicornFEBE.Bricks.ShoppingList.ListView": {
+    "UnicornFEBE.Bricks.Joke.ListView": {
       "deleteDone": "Жарт {0} видалено.",
       "deleteFail": "Не вдалося видалити жарт!",
       "updateFail": "Не вдалося редагувати жарт!",
       "pageLoadFail": "Не вдалося завантажити жарти!",
       "loadNext": "Завантажте ще 3 жарти"
     },
-    "UnicornFEBE.Bricks.ShoppingList.Tile": {
+    "UnicornFEBE.Bricks.Joke.Tile": {
       "averageRating": "Середня оцінка: {0} / 5",
       "deleteTip": "Видалити",
       "updateTip": "Редагувати"

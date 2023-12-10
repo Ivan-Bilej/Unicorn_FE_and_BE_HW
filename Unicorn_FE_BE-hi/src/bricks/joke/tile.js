@@ -1,7 +1,8 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils, useEffect, useRoute } from "uu5g05";
+import { createVisualComponent, PropTypes, Utils, useEffect, useRoute, useLsi, useUserPreferences } from "uu5g05";
 import { Box, Text, Line, Button, DateTime, Pending } from "uu5g05-elements";
 import Config from "./config/config.js";
+import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
 //@@viewOn:css
@@ -111,6 +112,9 @@ const Tile = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
+    const [preferences] = useUserPreferences();
+    const lsi = useLsi(importLsi, [Tile.uu5Tag]);
+
     useEffect(() => {
       if (
         props.shoppingListDataObject.data.image &&
@@ -183,8 +187,6 @@ const Tile = createVisualComponent({
         {shoppingList.itemIdList?.length > 0 && <InfoLine>{buildItemNames(shoppingList.itemIdList)}</InfoLine>}
 
         <InfoLine>{shoppingList.id}</InfoLine>
-        <InfoLine>{props.identity}</InfoLine>
-        <InfoLine>{props.profileList}</InfoLine>
         <InfoLine>{shoppingList.uuIdentityName}</InfoLine>
 
         <InfoLine>
@@ -192,11 +194,15 @@ const Tile = createVisualComponent({
         </InfoLine>
 
         <Box significance="distinct" className={Css.footer()}>
-          {`Average rating: ${shoppingList.averageRating.toFixed(shoppingList.averageRating % 1 ? 1 : 0)} / 5`}
+          {Utils.String.format(lsi.averageRating, Utils.Number.format(shoppingList.averageRating.toFixed(shoppingList.averageRating % 1 ? 1 : 0), {
+              groupingSeparator: preferences.numberGroupingSeparater,
+              decimalSeparator: preferences.numberDecimalSeparator,
+            })
+          )}
           {canManage && (
             <div>
-              <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip="Update" disabled={isActionDisabled}/>
-              <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip="Delete" disabled={isActionDisabled}/>
+              <Button icon="mdi-pencil" onClick={handleUpdate} significance="subdued" tooltip={lsi.updateTip} disabled={isActionDisabled}/>
+              <Button icon="mdi-delete" onClick={handleDelete} significance="subdued" tooltip={lsi.deleteTip} disabled={isActionDisabled}/>
             </div>
           )
         };

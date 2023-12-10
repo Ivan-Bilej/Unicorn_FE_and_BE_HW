@@ -3,7 +3,7 @@ import lsiEn from "./en.json";
 
 const libraryCode = process.env.NAME;
 
-const importLsi = (lang) => import(`./${lang}.json`);
+const importLsi = (language) => import(`./${language}.json`);
 importLsi.libraryCode = libraryCode;
 
 Utils.Lsi.setDefaultLsi(libraryCode, { en: lsiEn });

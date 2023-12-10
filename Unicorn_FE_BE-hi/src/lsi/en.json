@@ -29,25 +29,25 @@
       "nameLabel": "Name",
       "initialize": "Initialize"
     },
-    "UnicornFEBE.Bricks.ShoppingList.CreateForm": {
+    "UnicornFEBE.Bricks.Joke.CreateForm": {
       "name": "Name",
-      "text": "Text",
+      "description": "Text",
       "cancel": "Cancel",
       "submit": "Create shopping list"
     },
-    "UnicornFEBE.Bricks.ShoppingList.CreateView": {
+    "UnicornFEBE.Bricks.Joke.CreateView": {
       "createShoppingList": "Add shopping list",
       "createFail": "Shopping list creation failed!",
       "createDone": "Shopping list {0} has been created."
     },
-    "UnicornFEBE.Bricks.ShoppingList.ListView": {
+    "UnicornFEBE.Bricks.Joke.ListView": {
       "deleteDone": "The shopping list {0} has been deleted.",
       "deleteFail": "Shopping list delete failed!",
       "updateFail": "Shopping list update failed!",
       "pageLoadFail": "shopping lists loading failed!",
       "loadNext": "Load next 3 shopping lists"
     },
-    "UnicornFEBE.Bricks.ShoppingList.Tile": {
+    "UnicornFEBE.Bricks.Joke.Tile": {
       "averageRating": "Average rating: {0} / 5",
       "deleteTip": "Delete",
       "updateTip": "Update"
