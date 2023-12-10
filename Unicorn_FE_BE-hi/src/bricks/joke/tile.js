@@ -84,8 +84,6 @@ function hasManagePermission(shoppingList, identity, profileList) {
      * */
   //const isOwner = shoppingList.uuIdentity === identity.uuIdentity;
   const isOwner = shoppingList.uuIdentity === identity;
-  console.log(identity)
-  console.log(isOwner)
   return isAuthority || (isExecutive && isOwner);
 }
 //@@viewOff:helpers

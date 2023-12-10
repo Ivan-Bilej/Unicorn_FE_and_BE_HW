@@ -19,7 +19,7 @@ const Css = {
 
 let ShoppingLists = createVisualComponent({
   //@@viewOn:statics
-  uu5Tag: Config.TAG + "Home",
+  uu5Tag: Config.TAG + "Shopping Lists",
   //@@viewOff:statics
 
   render() {
