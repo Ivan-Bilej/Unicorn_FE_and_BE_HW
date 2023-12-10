@@ -26,7 +26,12 @@ let ShoppingLists = createVisualComponent({
     //@@viewOn:private
     const subAppDataObject = useSubAppData();
     const systemDataObject = useSystemData();
-    const { identity } = useSession();
+    /**
+     * REMOVE "//" AFTER useSession WORKS AND uuApp LOGIN WORKS
+     * REMOVE LINE "const { identity } = {identitiy: "6565-1"}"
+     * */
+    //const { identity } = useSession();
+    const { identity } = {identity: "6565-1"}
     
     const profileList = systemDataObject.data.profileData.uuIdentityProfileList;
     const canCreate = profileList.includes("Authorities") || profileList.includes("Executives");

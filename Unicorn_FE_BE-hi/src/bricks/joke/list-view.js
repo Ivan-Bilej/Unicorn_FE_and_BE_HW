@@ -28,7 +28,12 @@ const ListView = createVisualComponent({
   //@@viewOn:propTypes
   propTypes: {
     shoppingListDataList: PropTypes.object.isRequired,
-    identity: PropTypes.object.isRequired,
+    /**
+     * REMOVE "//" AFTER useSession WORKS AND uuApp LOGIN WORKS
+     * REMOVE LINE "const { identity } = {identitiy: "6565-1"}"
+     * */
+    //identity: PropTypes.object.isRequired,
+    identity: PropTypes.string.isRequired,
     categoryList: PropTypes.array,
     profileList: PropTypes.array,
   },
