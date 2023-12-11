@@ -4,7 +4,7 @@
   "uuSubApp": {
     "code": "UNICORN.FE.BE",
     "version": "0.1.0",
-    "name": "UnicornFEBE",
+    "name": "unicornFeBe",
     "description": "",
     "license": "License Commercial",
     "asidRequired": true,
@@ -18,7 +18,7 @@
           "max": 1
         },
         "appPackUri": null,
-        "runtimeStack": "UU.APPG01/APPSERVER_NODEJS_OL8_STACK-3.0"
+        "runtimeStack": "UU.APPG01/APPSERVER_NODEJS_STACK-2.1"
       }
     },
     "uuAppObjectStoreMap": {

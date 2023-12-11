@@ -2,17 +2,17 @@
   "{vendor}-{uuApp}-{uuSubApp}": {
     "useCaseMap": {
       "sys/uuAppWorkspace/init": {
-        "realization": "api/controllers/FEBEController.init",
+        "realization": "api/controllers/FeBeController.init",
         "httpMethod": "POST",
         "type": "CMD"
       },
       "sys/uuAppWorkspace/load": {
-        "realization": "api/controllers/FEBEController.load",
+        "realization": "api/controllers/FeBeController.load",
         "httpMethod": "GET",
         "type": "CMD"
       },
       "sys/uuAppWorkspace/loadBasicData": {
-        "realization": "api/controllers/FEBEController.loadBasicData",
+        "realization": "api/controllers/FeBeController.loadBasicData",
         "httpMethod": "GET",
         "type": "CMD"
       },

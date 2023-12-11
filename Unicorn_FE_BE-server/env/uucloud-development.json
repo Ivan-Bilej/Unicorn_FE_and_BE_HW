@@ -4,7 +4,7 @@
   "uuSubApp": {
     "code": "UNICORN.FE.BE",
     "version": "0.1.0",
-    "name": "UnicornFEBE",
+    "name": "unicornFeBe",
     "description": "",
     "license": "License Commercial",
     "asidRequired": true,
@@ -18,7 +18,7 @@
           "max": 1
         },
         "appPackUri": null,
-        "runtimeStack": "UU.APPG01/APPSERVER_NODEJS_OL8_STACK-3.0"
+        "runtimeStack": "UU.APPG01/APPSERVER_NODEJS_STACK-2.1"
       }
     },
     "uuAppObjectStoreMap": {
@@ -32,8 +32,8 @@
     "uuConfigMap": {
       "uu_app_secretstore_enable_encryption": true,
       "uu_app_secretstore_master_key_active_slot": "slot1",
-      "uu_app_secretstore_master_key1_slot1": "Gd&mkE^*5D<jak*SvshjhV,JeSq&wZs1(jijhW#apaH*=LV)?P&73%u-pVlVyKt>",
-      "asid_license_owner_list": ["0-0"],
+      "uu_app_secretstore_master_key1_slot1": "_)GwuLCZ5.tO1HUm%TXO6Mvvn7kXX>ToGR(Y1>3qgLXE4E~M((f-FrbCU(*zXcI&",
+      "asid_license_owner_list": ["6337-6400-1"],
       "uu_app_oidc_providers_oidcg02_uri": "https://uuapp-dev.plus4u.net/uu-oidc-maing02/eca71064ecce44b0a25ce940eb8f053d/oidc",
       "uu5g05_libraryRegistryBaseUri": "https://uuapp-dev.plus4u.net/uu-applibraryregistry-maing01/000008ad5570455e83857a394f9a21c9",
       "uu5g05_plus4UGoBaseUri": "https://uuapp-dev.plus4u.net/uu-plus4ugo-maing01/00000c3f57074bfcb759aba2d562e013",

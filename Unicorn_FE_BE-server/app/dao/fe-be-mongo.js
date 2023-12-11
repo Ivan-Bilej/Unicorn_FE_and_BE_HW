@@ -1,7 +1,7 @@
 "use strict";
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
 
-class FEBEMongo extends UuObjectDao {
+class FeBeMongo extends UuObjectDao {
   async createSchema() {
     await super.createIndex({ awid: 1 }, { unique: true });
   }
@@ -35,4 +35,4 @@ class FEBEMongo extends UuObjectDao {
   }
 }
 
-module.exports = FEBEMongo;
+module.exports = FeBeMongo;
