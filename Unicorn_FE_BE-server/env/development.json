@@ -3,11 +3,7 @@
   "uuSubAppDataStoreMap": {
     "primary": "mongodb://127.0.0.1:27017/feBePrimary"
   },
-<<<<<<< HEAD
   "asid_license_owner_list": ["6337-6400-1", "3782-9997-7887-0000"],
-=======
-  "asid_license_owner_list": ["6337-6400-1"],
->>>>>>> 49988b76b6d052139b3f91af3be0440e7c426990
   "asid": "11111111111111111111111111111111",
   "log_level": "INFO",
   "uu_app_oidc_providers_oidcg02_uri": "https://uuapp-dev.plus4u.net/uu-oidc-maing02/eca71064ecce44b0a25ce940eb8f053d/oidc"

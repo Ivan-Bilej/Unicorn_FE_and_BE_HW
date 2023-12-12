@@ -32,11 +32,7 @@
     "uuConfigMap": {
       "uu_app_secretstore_enable_encryption": true,
       "uu_app_secretstore_master_key_active_slot": "slot1",
-<<<<<<< HEAD
       "uu_app_secretstore_master_key1_slot1": "M+R6JDP>_tYx+f.6wWbi_sQt#^)QT^NXd71OvF})L6}sAY@6JhfFmK%_U)EKd2JC",
-=======
-      "uu_app_secretstore_master_key1_slot1": "_)GwuLCZ5.tO1HUm%TXO6Mvvn7kXX>ToGR(Y1>3qgLXE4E~M((f-FrbCU(*zXcI&",
->>>>>>> 49988b76b6d052139b3f91af3be0440e7c426990
       "asid_license_owner_list": ["6337-6400-1"],
       "uu_app_oidc_providers_oidcg02_uri": "https://uuapp-dev.plus4u.net/uu-oidc-maing02/eca71064ecce44b0a25ce940eb8f053d/oidc",
       "uu5g05_libraryRegistryBaseUri": "https://uuapp-dev.plus4u.net/uu-applibraryregistry-maing01/000008ad5570455e83857a394f9a21c9",
