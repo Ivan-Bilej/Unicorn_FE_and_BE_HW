@@ -25,6 +25,11 @@
         "realization": "index.html",
         "httpMethod": "GET",
         "type": "UVE"
+      },
+      "helloWorld": {
+        "realization": "api/controllers/GreetingController.helloWorld",
+        "httpMethod": ["GET"],
+        "type": "CMD"
       }
     }
   }
