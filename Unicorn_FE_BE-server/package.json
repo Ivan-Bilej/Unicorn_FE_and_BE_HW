@@ -1,19 +1,19 @@
 {
-  "name": "Unicorn_FE_BE-server",
+  "name": "unicorn_fe_be-server",
   "version": "0.1.0",
   "description": "",
   "license": "License Commercial",
-  "spec": "nodejs-app; uu_appg01_devkit@5.17.0",
+  "spec": "nodejs-app; uu_appg01_devkit@5.15.4",
   "dependencies": {
     "uu_appg01_server": "^5.18.0",
     "uu_apprepresentationg01": "^2.2.0"
   },
   "devDependencies": {
-    "uu_appg01_devkit": "^5.17.0",
+    "uu_appg01_devkit": "^5.15.4",
     "uu_appg01_server-test": "^5.18.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=12.0.0"
   },
   "scripts": {
     "clean": "uu_appg01_devkit clean",

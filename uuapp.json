@@ -1,5 +1,5 @@
 {
-  "product": "Unicorn_FE_BE",
+  "product": "unicorn_fe_be",
   "version": "0.1.0",
   "license": "License Commercial",
   "description": {
@@ -12,6 +12,6 @@
       "appDeploymentUri": null
     }
   },
-  "Unicorn_FE_BE-hi": {},
-  "Unicorn_FE_BE-server": {}
+  "unicorn_fe_be-hi": {},
+  "unicorn_fe_be-server": {}
 }

@@ -1,9 +1,9 @@
 {
   "port": 8080,
   "uuSubAppDataStoreMap": {
-    "primary": "mongodb://127.0.0.1:27017/fEBEPrimary"
+    "primary": "mongodb://127.0.0.1:27017/feBePrimary"
   },
-  "asid_license_owner_list": ["0-0"],
+  "asid_license_owner_list": ["6337-6400-1", "3782-9997-7887-0000"],
   "asid": "11111111111111111111111111111111",
   "log_level": "INFO",
   "uu_app_oidc_providers_oidcg02_uri": "https://uuapp-dev.plus4u.net/uu-oidc-maing02/eca71064ecce44b0a25ce940eb8f053d/oidc"

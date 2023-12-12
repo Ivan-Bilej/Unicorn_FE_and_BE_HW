@@ -4,8 +4,8 @@
       "type": "uuAppObjectStore",
       "realization": "MongoDB",
       "schemaMap": {
-        "fEBE": {
-          "realization": "dao/FEBEMongo"
+        "feBe": {
+          "realization": "dao/FeBeMongo"
         }
       }
     }

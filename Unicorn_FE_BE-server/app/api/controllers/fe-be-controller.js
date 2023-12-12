@@ -1,18 +1,18 @@
 "use strict";
-const FEBEAbl = require("../../abl/fe-be-abl.js");
+const FeBeAbl = require("../../abl/fe-be-abl.js");
 
-class FEBEController {
+class FeBeController {
   init(ucEnv) {
-    return FEBEAbl.init(ucEnv.getUri(), ucEnv.getDtoIn(), ucEnv.getSession());
+    return FeBeAbl.init(ucEnv.getUri(), ucEnv.getDtoIn(), ucEnv.getSession());
   }
 
   load(ucEnv) {
-    return FEBEAbl.load(ucEnv.getUri(), ucEnv.getSession());
+    return FeBeAbl.load(ucEnv.getUri(), ucEnv.getSession());
   }
 
   loadBasicData(ucEnv) {
-    return FEBEAbl.loadBasicData(ucEnv.getUri(), ucEnv.getSession());
+    return FeBeAbl.loadBasicData(ucEnv.getUri(), ucEnv.getSession());
   }
 }
 
-module.exports = new FEBEController();
+module.exports = new FeBeController();

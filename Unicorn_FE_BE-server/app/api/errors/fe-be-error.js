@@ -1,10 +1,10 @@
 "use strict";
-const FEBEUseCaseError = require("./fe-be-use-case-error.js");
+const FeBeUseCaseError = require("./fe-be-use-case-error.js");
 
 const Init = {
-  UC_CODE: `${FEBEUseCaseError.ERROR_PREFIX}init/`,
+  UC_CODE: `${FeBeUseCaseError.ERROR_PREFIX}init/`,
 
-  InvalidDtoIn: class extends FEBEUseCaseError {
+  InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
       super(...arguments);
       this.code = `${Init.UC_CODE}invalidDtoIn`;
@@ -12,7 +12,7 @@ const Init = {
     }
   },
 
-  SchemaDaoCreateSchemaFailed: class extends FEBEUseCaseError {
+  SchemaDaoCreateSchemaFailed: class extends FeBeUseCaseError {
     constructor() {
       super(...arguments);
       this.status = 500;
@@ -21,7 +21,7 @@ const Init = {
     }
   },
 
-  SetProfileFailed: class extends FEBEUseCaseError {
+  SetProfileFailed: class extends FeBeUseCaseError {
     constructor() {
       super(...arguments);
       this.code = `${Init.UC_CODE}sys/setProfileFailed`;
@@ -29,7 +29,7 @@ const Init = {
     }
   },
 
-  CreateAwscFailed: class extends FEBEUseCaseError {
+  CreateAwscFailed: class extends FeBeUseCaseError {
     constructor() {
       super(...arguments);
       this.code = `${Init.UC_CODE}createAwscFailed`;

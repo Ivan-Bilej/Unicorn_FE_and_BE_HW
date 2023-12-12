@@ -1,7 +1,7 @@
 {
-    "appName": "Application UnicornFEBE",
+    "appName": "Application UnicornFeBe",
     "About": {
-      "header": "About application UnicornFEBE",
+      "header": "About application UnicornFeBe",
       "creatorsHeader": "Application creators",
       "termsOfUse": "Terms of use"
     },
@@ -29,7 +29,7 @@
       "nameLabel": "Name",
       "initialize": "Initialize"
     },
-    "UnicornFEBE.Bricks.Joke.CreateForm": {
+    "UnicornFeBe.Bricks.Joke.CreateForm": {
       "name": "Name",
       "description": "Text",
       "item": "Item",
@@ -39,12 +39,12 @@
       "submit": "Create shopping list",
       "textOrImage": "Text or image must be provided."
     },
-    "UnicornFEBE.Bricks.Joke.CreateView": {
+    "UnicornFeBe.Bricks.Joke.CreateView": {
       "createShoppingList": "Add shopping list",
       "createFail": "Shopping list creation failed!",
       "createDone": "Shopping list {0} has been created."
     },
-    "UnicornFEBE.Bricks.Joke.DetailModal": {
+    "UnicornFeBe.Bricks.Joke.DetailModal": {
         "oneVotes": "{0} vote",
         "fewVotes": "{0} votes",
         "otherVotes": "{0} votes",
@@ -52,7 +52,7 @@
         "update": "Update",
         "delete": "Delete"
     },
-    "UnicornFEBE.Bricks.Joke.UpdateModal": {
+    "UnicornFeBe.Bricks.Joke.UpdateModal": {
         "header": "Update shopping list",
         "name": "Name",
         "description": "Text",
@@ -63,19 +63,19 @@
         "submit": "Update",
         "textOrImage": "Text or image must be provided."
     },
-    "UnicornFEBE.Bricks.Joke.ListView": {
+    "UnicornFeBe.Bricks.Joke.ListView": {
       "deleteDone": "The shopping list {0} has been deleted.",
       "deleteFail": "Shopping list delete failed!",
       "updateFail": "Shopping list update failed!",
       "pageLoadFail": "shopping lists loading failed!",
       "loadNext": "Load next 3 shopping lists"
     },
-    "UnicornFEBE.Bricks.Joke.Tile": {
+    "UnicornFeBe.Bricks.Joke.Tile": {
       "averageRating": "Average rating: {0} / 5",
       "deleteTip": "Delete",
       "updateTip": "Update"
     },
-    "UnicornFEBE.Core.RouteBar": {
+    "UnicornFeBe.Core.RouteBar": {
       "title": "{0}",
       "home": "Welcome",
       "shopping_lists": "Shopping Lists",

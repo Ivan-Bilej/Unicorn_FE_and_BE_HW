@@ -1,8 +1,8 @@
 import { AppContainer } from "react-hot-loader";
 import { Environment, Utils } from "uu5g05";
 import "uu5g04"; // required for proper integration with uu5g05
+
 import Spa from "./core/spa.js";
-import "calls";
 
 // propagate app version into environment
 Environment["appVersion"] = process.env.VERSION;

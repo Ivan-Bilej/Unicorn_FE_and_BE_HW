@@ -1,9 +1,9 @@
 "use strict";
 const { UseCaseError } = require("uu_appg01_server").AppServer;
 
-class FEBEUseCaseError extends UseCaseError {
+class FeBeUseCaseError extends UseCaseError {
   static get ERROR_PREFIX() {
-    return "Unicorn-FE-BE/";
+    return "unicorn-fe-be/";
   }
 
   constructor(dtoOut, paramMap = {}, cause = null) {
@@ -15,4 +15,4 @@ class FEBEUseCaseError extends UseCaseError {
   }
 }
 
-module.exports = FEBEUseCaseError;
+module.exports = FeBeUseCaseError;

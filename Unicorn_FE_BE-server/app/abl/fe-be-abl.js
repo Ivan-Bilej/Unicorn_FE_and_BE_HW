@@ -14,9 +14,9 @@ const WARNINGS = {
   },
 };
 
-const logger = LoggerFactory.get("FEBEAbl");
+const logger = LoggerFactory.get("FeBeAbl");
 
-class FEBEAbl {
+class FeBeAbl {
   constructor() {
     this.validator = Validator.load();
   }
@@ -34,7 +34,7 @@ class FEBEAbl {
     );
 
     // HDS 2
-    const schemas = ["fEBE"];
+    const schemas = ["feBe"];
     let schemaCreateResults = schemas.map(async (schema) => {
       try {
         return await DaoFactory.getDao(schema).createSchema();
@@ -52,8 +52,8 @@ class FEBEAbl {
       const uuBtBaseUri = uuBtUriBuilder.toUri().getBaseUri();
 
       const createAwscDtoIn = {
-        name: "UnicornFE",
-        typeCode: "Unicorn-FE-BE",
+        name: "UnicornFe",
+        typeCode: "unicorn-fe-be",
         location: location,
         uuAppWorkspaceUri: baseUri,
       };
@@ -149,4 +149,4 @@ class FEBEAbl {
   }
 }
 
-module.exports = new FEBEAbl();
+module.exports = new FeBeAbl();
