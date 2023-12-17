@@ -6,6 +6,12 @@
       "schemaMap": {
         "feBe": {
           "realization": "dao/FeBeMongo"
+        },
+        "shoppingListsMain": {
+          "realization": "dao/ShoppingListsMainMongo"
+        },
+        "shoppingList": {
+          "realization": "dao/ShoppingListMongo"
         }
       }
     }

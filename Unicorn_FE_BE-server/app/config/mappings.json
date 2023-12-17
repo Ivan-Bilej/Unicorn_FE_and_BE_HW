@@ -28,7 +28,14 @@
       },
       "helloWorld": {
         "realization": "api/controllers/GreetingController.helloWorld",
-        "httpMethod": ["GET"],
+        "httpMethod": [
+          "GET"
+        ],
+        "type": "CMD"
+      },
+      "shoppingList/create": {
+        "realization": "api/controllers/ShoppingListController.create",
+        "httpMethod": "POST",
         "type": "CMD"
       }
     }
