@@ -7,11 +7,9 @@
         "feBe": {
           "realization": "dao/FeBeMongo"
         },
-        "shoppingListsMain": {
-          "realization": "dao/ShoppingListsMainMongo"
-        },
         "shoppingList": {
-          "realization": "dao/ShoppingListMongo"
+          "realization": "dao/ShoppingListMongo",
+          "maxNoi": 1024
         }
       }
     }

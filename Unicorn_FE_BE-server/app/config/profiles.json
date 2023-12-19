@@ -1,10 +1,10 @@
 {
   "{asid}": {
-    "profileList": ["AsidAuthorities","AsidExecutives","AsidLicenseOwner","Public"],
+    "profileList": ["AsidAuthorities","AsidExecutives", "AsidLicenseOwner","Public"],
     "useCaseMap": {}
   },
   "*": {
-    "profileList": ["Authorities","Executives","AwidLicenseOwner","Public","Authenticated","AwidInitiator","AwidLicenceOwner"],
+    "profileList": ["Authorities","Executives", "Readers", "AwidLicenseOwner","Public","Authenticated","AwidInitiator","AwidLicenceOwner"],
     "useCaseMap": {
       "sys/uuAppWorkspace/init": {
         "sysStateList": ["created","assigned"],
@@ -12,7 +12,7 @@
       },
       "sys/uuAppWorkspace/load": {
         "sysStateList": ["active"],
-        "profileList": ["Authenticated"]
+        "profileList": ["Authenticated", "Authorities", "Executives", "Readers"]
       },
       "sys/uuAppWorkspace/loadBasicData": {
         "sysStateList": ["active"],
@@ -29,13 +29,13 @@
         "sysStateList": ["active"],
         "profileList": ["Public","AwidLicenseOwner","AwidInitiator"]
       },
-      "shoppingList": {
-        "sysStateList": ["active"],
-        "profileList": ["AwidLicenceOwner","Authorities","Executives"]
-      },
       "shoppingList/create": {
         "sysStateList": ["active"],
-        "profileList": ["Public"]
+        "profileList": ["Executives", "Readers"]
+      },
+      "shoppingList/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Public", "Executives", "Readers"]
       }
     }
   }
