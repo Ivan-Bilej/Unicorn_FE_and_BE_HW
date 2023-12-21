@@ -2,12 +2,10 @@
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
 
 class ItemsMongo extends UuObjectDao {
+  async createSchema() {}
 
-  async createSchema(){
-  }
-
-  async create(shoppingList){
-    return await super.insertOne(shoppingList)
+  async create(shoppingList) {
+    return await super.insertOne(shoppingList);
   }
 
   async get(awid, id) {
@@ -18,7 +16,7 @@ class ItemsMongo extends UuObjectDao {
     const filter = {
       awid,
     };
-  
+
     return await super.find(filter, pageInfo);
   }
 
@@ -30,7 +28,6 @@ class ItemsMongo extends UuObjectDao {
   async delete(awid, id) {
     await super.deleteOne({ awid, id });
   }
-
 }
 
 module.exports = ItemsMongo;

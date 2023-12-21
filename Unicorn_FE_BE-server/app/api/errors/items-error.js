@@ -1,7 +1,7 @@
 "use strict";
 
 const FeBeUseCaseError = require("./fe-be-use-case-error.js");
-const ITEMS_ERROR_PREFIX = `${FeBeUseCaseError.ERROR_PREFIX}shoppingList/_id?/items/`;
+const ITEMS_ERROR_PREFIX = `${FeBeUseCaseError.ERROR_PREFIX}items/`;
 
 const Create = {
   UC_CODE: `${ITEMS_ERROR_PREFIX}create/`,

@@ -28,9 +28,7 @@
       },
       "helloWorld": {
         "realization": "api/controllers/GreetingController.helloWorld",
-        "httpMethod": [
-          "GET"
-        ],
+        "httpMethod": ["GET"],
         "type": "CMD"
       },
       "shoppingList/create": {
@@ -59,6 +57,26 @@
         "type": "CMD"
       },
       "items/create": {
+        "realization": "api/controllers/ItemsController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "items/update": {
+        "realization": "api/controllers/ItemsController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "items/delete": {
+        "realization": "api/controllers/ItemsController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "items/get": {
+        "realization": "api/controllers/ItemsController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "items/list": {
         "realization": "api/controllers/ItemsController.create",
         "httpMethod": "POST",
         "type": "CMD"

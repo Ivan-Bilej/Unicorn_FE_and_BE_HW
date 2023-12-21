@@ -47,11 +47,27 @@
       },
       "shoppingList/list": {
         "sysStateList": ["active"],
-        "profileList": ["Public","Executives","Readers"]
+        "profileList": ["Executives","Readers"]
       },
       "items/create": {
         "sysStateList": ["active"],
-        "profileList": []
+        "profileList": ["Executives","Readers"]
+      },
+      "items/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Executives","Readers"]
+      },
+      "items/delete": {
+        "sysStateList": ["active"],
+        "profileList": ["Executives","Readers"]
+      },
+      "items/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Executives","Readers"]
+      },
+      "items/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Executives","Readers"]
       }
     }
   }
