@@ -1,7 +1,8 @@
 "use strict";
-const ShoppingListAbl = require("../../abl/shopping-list-abl.js");
+const ItemsAbl = require("../../abl/items-abl.js");
 
-class ShoppingListController {
+class ItemsController {
+
   create(ucEnv) {
     return ShoppingListAbl.create(
       ucEnv.getUri().getAwid(), 
@@ -49,4 +50,4 @@ class ShoppingListController {
 
 }
 
-module.exports = new ShoppingListController();
+module.exports = new ItemsController();

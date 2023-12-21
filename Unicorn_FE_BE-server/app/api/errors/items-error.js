@@ -1,10 +1,10 @@
 "use strict";
 
 const FeBeUseCaseError = require("./fe-be-use-case-error.js");
-const SHOPPING_LIST_ERROR_PREFIX = `${FeBeUseCaseError.ERROR_PREFIX}shoppingList/`;
+const ITEMS_ERROR_PREFIX = `${FeBeUseCaseError.ERROR_PREFIX}shoppingList/_id?/items/`;
 
 const Create = {
-  UC_CODE: `${SHOPPING_LIST_ERROR_PREFIX}create/`,
+  UC_CODE: `${ITEMS_ERROR_PREFIX}create/`,
   
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -13,18 +13,10 @@ const Create = {
       this.message = "DtoIn is not valid.";
     }
   },
-
-  TextContainsFishyWords: class extends FeBeUseCaseError {
-    constructor() {
-      super(...arguments);
-      this.code = `${Create.UC_CODE}textContainsFishyWords`;
-      this.message = "The text of the joke contains fishy words.";
-    }
-  },
 };
 
 const List = {
-  UC_CODE: `${SHOPPING_LIST_ERROR_PREFIX}list/`,
+  UC_CODE: `${ITEMS_ERROR_PREFIX}list/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -36,7 +28,7 @@ const List = {
 };
 
 const Update = {
-  UC_CODE: `${SHOPPING_LIST_ERROR_PREFIX}update/`,
+  UC_CODE: `${ITEMS_ERROR_PREFIX}update/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -48,7 +40,7 @@ const Update = {
 };
 
 const Get = {
-  UC_CODE: `${SHOPPING_LIST_ERROR_PREFIX}get/`,
+  UC_CODE: `${ITEMS_ERROR_PREFIX}get/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -60,7 +52,7 @@ const Get = {
 };
 
 const Delete = {
-  UC_CODE: `${SHOPPING_LIST_ERROR_PREFIX}delete/`,
+  UC_CODE: `${ITEMS_ERROR_PREFIX}delete/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
