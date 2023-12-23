@@ -1,4 +1,4 @@
-const Errors = require("../errors/items-error.js");
+const Errors = require("../errors/item-error.js");
 
 const Warnings = {
   Create: {

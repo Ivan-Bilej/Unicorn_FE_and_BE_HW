@@ -3,11 +3,12 @@ const Path = require("path");
 const { Validator } = require("uu_appg01_server").Validation;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
-
 const Errors = require("../api/errors/shopping-list-error.js");
 const Warnings = require("../api/warnings/shopping-list-warning.js");
+const itemAbl = require("./item-abl.js");
+const ItemAbl = itemAbl
 
-const FISHY_WORDS = ["barracuda", "broccoli", "Topolánek"];
+const FISHY_WORDS = [];
 const EXECUTIVES_PROFILE = "Executives";
 
 const WARNINGS = {
@@ -23,6 +24,7 @@ class ShoppingListAbl {
 
   async create(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
+    let items = [];
 
     // validation of dtoIn
     const validationResult = this.validator.validate("shoppingListCreateDtoInType", dtoIn);
@@ -34,6 +36,18 @@ class ShoppingListAbl {
       Errors.Create.InvalidDtoIn
     );
 
+    if (dtoIn.items && Array.isArray(dtoIn.items)) {
+      const validationResult = this.validator.validate("itemCreateDtoInType", dtoIn);
+      uuAppErrorMap = ValidationHelper.processValidationResult(
+        dtoIn,
+        validationResult,
+        uuAppErrorMap,
+        Warnings.Create.UnsupportedKeys.code,
+        Errors.Create.InvalidDtoIn
+      );
+    }
+
+
     // check for fishy words
     FISHY_WORDS.forEach((word) => {
       if (dtoIn.text.includes(word)) {
@@ -43,6 +57,9 @@ class ShoppingListAbl {
 
     // set visibility
     const visibility = authorizationResult.getAuthorizedProfiles().includes(EXECUTIVES_PROFILE);
+    console.log(authorizationResult)
+    console.log(authorizationResult.getAuthorizedProfiles())
+    console.log(authorizationResult.getAuthorizedProfiles().includes())
 
     // get uuIdentity information
     const uuIdentity = session.getIdentity().getUuIdentity();
@@ -58,34 +75,39 @@ class ShoppingListAbl {
     }
     const shoppingList = await this.dao.create(listObject) 
 
+    // Create items if they exist in dtoIn
+    if (dtoIn.items && Array.isArray(dtoIn.items)) {
+      items = await dtoIn.items.map(async itemDto => {
+        return await ItemAbl.create(awid, itemDto, session);
+      });
+    }
+
     // prepare and return dtoOut
-    const dtoOut = { ...shoppingList, uuAppErrorMap };
+    const dtoOut = { ...shoppingList, items: items.map(item => item.id), uuAppErrorMap };
     return dtoOut;
   }
 
-  async get(awid, dtoIn) {
+  async get(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
     // validates dtoIn
-    const validationResult = this.validator.validate("shoppingListListDtoInType", dtoIn);
+    const validationResult = this.validator.validate("shoppingListGetDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       uuAppErrorMap,
-      Warnings.List.UnsupportedKeys.code,
-      Errors.List.InvalidDtoIn
+      Warnings.Get.UnsupportedKeys.code,
+      Errors.Get.InvalidDtoIn
     );
 
-    // set default value for the pageInfo
-    if (!dtoIn.pageInfo) dtoIn.pageInfo = {};
-    dtoIn.pageInfo.pageSize ??= 100;
-    dtoIn.pageInfo.pageIndex ??= 0;
+    // fetch list by ID
+    const shoppingList = await this.dao.get(awid, dtoIn._id);
 
-    // fetch list by visibility
-    const dtoOut = await this.dao.listByVisibility(awid, true, dtoIn.pageInfo);
+    // Create items if they exist in dtoIn
+    let items = await ItemsAbl.get(awid, session);
 
     // prepare and return dtoOut
-    dtoOut.uuAppErrorMap = uuAppErrorMap;
+    const dtoOut = { ...shoppingList, items: items.map(item => item.id), uuAppErrorMap };
     return dtoOut;
   }
 
@@ -93,21 +115,14 @@ class ShoppingListAbl {
     let uuAppErrorMap = {};
 
     // validation of dtoIn
-    const validationResult = this.validator.validate("shoppingListCreateDtoInType", dtoIn);
+    const validationResult = this.validator.validate("shoppingListUpdateDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       uuAppErrorMap,
-      Warnings.Create.UnsupportedKeys.code,
-      Errors.Create.InvalidDtoIn
+      Warnings.Update.UnsupportedKeys.code,
+      Errors.Update.InvalidDtoIn
     );
-
-    // check for fishy words
-    FISHY_WORDS.forEach((word) => {
-      if (dtoIn.text.includes(word)) {
-        throw new Errors.Create.TextContainsFishyWords({ uuAppErrorMap }, { text: dtoIn.text, fishyWord: word });
-      }
-    });
 
     // set visibility
     const visibility = authorizationResult.getAuthorizedProfiles().includes(EXECUTIVES_PROFILE);
@@ -124,40 +139,43 @@ class ShoppingListAbl {
       uuIdentity,
       uuIdentityName,
     }
-    const shoppingList = await this.dao.create(listObject) 
+    const updatedShoppingList = await this.dao.update(listObject) 
+
+    // Create items if they exist in dtoIn
+    let items = [];
+    if (dtoIn.items && Array.isArray(dtoIn.items)) {
+      items = await dtoIn.items.map(async itemDto => {
+        return await ItemsAbl.update(awid, itemDto, session);
+      });
+    }
 
     // prepare and return dtoOut
-    const dtoOut = { ...shoppingList, uuAppErrorMap };
+    const dtoOut = { ...updatedShoppingList, items: items.map(item => item.id), uuAppErrorMap };
     return dtoOut;
   }
 
-  async delete(awid, dtoIn) {
+  async delete(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
     // validates dtoIn
-    const validationResult = this.validator.validate("shoppingListListDtoInType", dtoIn);
+    const validationResult = this.validator.validate("shoppingListDeleteDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       uuAppErrorMap,
-      Warnings.List.UnsupportedKeys.code,
-      Errors.List.InvalidDtoIn
+      Warnings.Delete.UnsupportedKeys.code,
+      Errors.Delete.InvalidDtoIn
     );
 
-    // set default value for the pageInfo
-    if (!dtoIn.pageInfo) dtoIn.pageInfo = {};
-    dtoIn.pageInfo.pageSize ??= 100;
-    dtoIn.pageInfo.pageIndex ??= 0;
+    /// delete shopping list from DB
+    await this.dao.delete(awid, dtoIn._id);
 
-    // fetch list by visibility
-    const dtoOut = await this.dao.listByVisibility(awid, true, dtoIn.pageInfo);
-
-    // prepare and return dtoOut
-    dtoOut.uuAppErrorMap = uuAppErrorMap;
+    // return dtoOut with success message
+    const dtoOut = { success: true, uuAppErrorMap };
     return dtoOut;
   }
 
-  async list(awid, dtoIn) {
+  async list(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
     // validates dtoIn

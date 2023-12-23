@@ -31,43 +31,43 @@
       },
       "shoppingList/create": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/update": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/delete": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/get": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/list": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
-      "items/create": {
+      "item/create": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
-      "items/update": {
+      "item/update": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
-      "items/delete": {
+      "item/delete": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
-      "items/get": {
+      "item/get": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
-      "items/list": {
+      "item/list": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       }
     }
   }

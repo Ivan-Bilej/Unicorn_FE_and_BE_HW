@@ -1,8 +1,12 @@
 /* eslint-disable */
 
+
 const shoppingListCreateDtoInType = shape({
   title: string(3, 255).isRequired(),
+  description: string(1, 4000),
   imageUrl: string(3, 4000).isRequired(),
+  items: array(),
+  allowedUsers: array(),
 });
 
 const shoppingListListDtoInType = shape({
@@ -13,13 +17,18 @@ const shoppingListListDtoInType = shape({
 });
 
 const shoppingListGetDtoInType = shape({
-  _id: string(24, 24).matches(/^[0-9a-fA-F]{24}$/).isRequired,
+  _id: mongoId().isRequired,
 });
 
 const shoppingListUpdateDtoInType = shape({
-  _id: string(24, 24).matches(/^[0-9a-fA-F]{24}$/).isRequired,
+  _id: mongoId().isRequired,
+  title: string(1, 255).isRequired(),
+  description: string(1, 4000),
+  image: string().isRequired(),
+  items: array(),
+  allowedUsers: array(),
 });
 
 const shoppingListDeleteDtoInType = shape({
-  _id: string(24, 24).matches(/^[0-9a-fA-F]{24}$/).isRequired,
+  _id: mongoId().isRequired(),
 });

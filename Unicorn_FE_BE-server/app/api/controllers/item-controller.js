@@ -1,10 +1,10 @@
 "use strict";
-const ItemsAbl = require("../../abl/items-abl.js");
+const ItemAbl = require("../../abl/item-abl.js");
 
-class ItemsController {
+class ItemController {
 
   create(ucEnv) {
-    return ShoppingListAbl.create(
+    return ItemAbl.create(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -13,7 +13,7 @@ class ItemsController {
   }
 
   get(ucEnv){
-    return ShoppingListAbl.get(
+    return ItemAbl.get(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -22,7 +22,7 @@ class ItemsController {
   }
 
   update(ucEnv) {
-    return ShoppingListAbl.update(
+    return ItemAbl.update(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -31,7 +31,7 @@ class ItemsController {
   }
 
   list(ucEnv) {
-    return ShoppingListAbl.list(
+    return ItemAbl.list(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -40,7 +40,7 @@ class ItemsController {
   }
 
   delete(ucEnv){
-    return ShoppingListAbl.delete(
+    return ItemAbl.delete(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -50,4 +50,4 @@ class ItemsController {
 
 }
 
-module.exports = new ItemsController();
+module.exports = new ItemController();

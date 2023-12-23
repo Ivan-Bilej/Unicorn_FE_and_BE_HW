@@ -11,8 +11,9 @@
           "realization": "dao/ShoppingListMongo",
           "maxNoi": 1024
         },
-        "items": {
-          "realization": "dao/ItemsMongo"
+        "item": {
+          "realization": "dao/ItemMongo",
+          "maxNoi": 1024
         }
       }
     }

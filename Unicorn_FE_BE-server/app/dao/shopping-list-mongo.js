@@ -1,6 +1,7 @@
 "use strict";
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
 
+
 class ShoppingListMongo extends UuObjectDao {
   async createSchema() {}
 
@@ -10,7 +11,6 @@ class ShoppingListMongo extends UuObjectDao {
 
   async listByVisibility(awid, visibility, pageInfo = {}) {
     const filter = { awid, visibility };
-
     return await super.find(filter, pageInfo);
   }
 
@@ -19,10 +19,7 @@ class ShoppingListMongo extends UuObjectDao {
   }
 
   async list(awid, pageInfo) {
-    const filter = {
-      awid,
-    };
-
+    const filter = {awid};
     return await super.find(filter, pageInfo);
   }
 

@@ -37,17 +37,17 @@
         "type": "CMD"
       },
       "shoppingList/update": {
-        "realization": "api/controllers/ShoppingListController.create",
+        "realization": "api/controllers/ShoppingListController.update",
         "httpMethod": "POST",
         "type": "CMD"
       },
       "shoppingList/delete": {
-        "realization": "api/controllers/ShoppingListController.create",
+        "realization": "api/controllers/ShoppingListController.delete",
         "httpMethod": "POST",
         "type": "CMD"
       },
       "shoppingList/get": {
-        "realization": "api/controllers/ShoppingListController.list",
+        "realization": "api/controllers/ShoppingListController.get",
         "httpMethod": "GET",
         "type": "CMD"
       },
@@ -56,28 +56,28 @@
         "httpMethod": "GET",
         "type": "CMD"
       },
-      "items/create": {
-        "realization": "api/controllers/ItemsController.create",
+      "item/create": {
+        "realization": "api/controllers/ItemController.create",
         "httpMethod": "POST",
         "type": "CMD"
       },
-      "items/update": {
-        "realization": "api/controllers/ItemsController.create",
+      "item/update": {
+        "realization": "api/controllers/ItemController.update",
         "httpMethod": "POST",
         "type": "CMD"
       },
-      "items/delete": {
-        "realization": "api/controllers/ItemsController.create",
+      "item/delete": {
+        "realization": "api/controllers/ItemController.delete",
         "httpMethod": "POST",
         "type": "CMD"
       },
-      "items/get": {
-        "realization": "api/controllers/ItemsController.create",
+      "item/get": {
+        "realization": "api/controllers/ItemController.get",
         "httpMethod": "POST",
         "type": "CMD"
       },
-      "items/list": {
-        "realization": "api/controllers/ItemsController.create",
+      "item/list": {
+        "realization": "api/controllers/ItemController.list",
         "httpMethod": "POST",
         "type": "CMD"
       }

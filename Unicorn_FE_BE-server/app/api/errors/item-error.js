@@ -1,10 +1,10 @@
 "use strict";
 
 const FeBeUseCaseError = require("./fe-be-use-case-error.js");
-const ITEMS_ERROR_PREFIX = `${FeBeUseCaseError.ERROR_PREFIX}items/`;
+const ITEM_ERROR_PREFIX = `${FeBeUseCaseError.ERROR_PREFIX}item/`;
 
 const Create = {
-  UC_CODE: `${ITEMS_ERROR_PREFIX}create/`,
+  UC_CODE: `${ITEM_ERROR_PREFIX}create/`,
   
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -16,7 +16,7 @@ const Create = {
 };
 
 const List = {
-  UC_CODE: `${ITEMS_ERROR_PREFIX}list/`,
+  UC_CODE: `${ITEM_ERROR_PREFIX}list/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -28,7 +28,7 @@ const List = {
 };
 
 const Update = {
-  UC_CODE: `${ITEMS_ERROR_PREFIX}update/`,
+  UC_CODE: `${ITEM_ERROR_PREFIX}update/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -40,7 +40,7 @@ const Update = {
 };
 
 const Get = {
-  UC_CODE: `${ITEMS_ERROR_PREFIX}get/`,
+  UC_CODE: `${ITEM_ERROR_PREFIX}get/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -52,7 +52,7 @@ const Get = {
 };
 
 const Delete = {
-  UC_CODE: `${ITEMS_ERROR_PREFIX}delete/`,
+  UC_CODE: `${ITEM_ERROR_PREFIX}delete/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
