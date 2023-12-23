@@ -1,6 +1,7 @@
 //@@viewOn:imports
 import { createVisualComponent, PropTypes, Utils, Content, useRef, useLsi, useState } from "uu5g05";
 import { Button, Pending, useAlertBus } from "uu5g05-elements";
+import { Grid } from "uu5tilesg02-elements";
 import Tile from "./tile";
 import Config from "./config/config.js";
 import DetailModal from "./detail-modal";
@@ -42,7 +43,7 @@ const ListView = createVisualComponent({
     shoppingListDataList: PropTypes.object.isRequired,
     /**
      * REMOVE "//" AFTER useSession WORKS AND uuApp LOGIN WORKS
-     * REMOVE LINE "const { identity } = {identitiy: "6565-1"}"
+     * REMOVE LINE "identity: PropTypes.string.isRequired,"
      * */
     //identity: PropTypes.object.isRequired,
     identity: PropTypes.string.isRequired,
@@ -117,10 +118,21 @@ const ListView = createVisualComponent({
       setUpdateData({ open: false });
     }
 
-    async function handleLoadNext() {
+    async function handleLoadNext({ indexFrom }) {
       try {
-        await props.shoppingListDataList.handlerMap.loadNext({ pageInfo: { pageIndex: nextPageIndexRef.current } });
-        nextPageIndexRef.current++;
+        /*
+        await props.shoppingListDataList.handlerMap.loadNext({ 
+          pageInfo: { 
+            pageIndex: Math.floor(indexFrom / props.shoppingListDataList.pageSize)//nextPageIndexRef.current 
+          } 
+        });
+        */
+        await props.shoppingListDataList.handlerMap.loadNext({ 
+          pageInfo: { 
+            pageIndex: nextPageIndexRef.current 
+          } 
+        });
+        //nextPageIndexRef.current++;
       } catch (error) {
         ListView.logger.error("Error loading next page", error);
         showError(error, lsi.pageLoadFail);
@@ -136,29 +148,31 @@ const ListView = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props);
     const shoppingListList = props.shoppingListDataList.data.filter((item) => item !== undefined);
 
+    const tileProps = {
+      profileList: props.profileList,
+      identity: props.identity,
+      itemList: props.itemList,
+      onDetail: handleItemDetailOpen,
+      onDelete: handleDelete,
+      onUpdate: handleUpdate,
+    };
+
     return (
       <div {...attrs}>
-        {shoppingListList.map((item) => (
-          <Tile
-            key={item.data.id}
-            shoppingListDataObject={item}
-            profileList={props.profileList}
-            identity={props.identity}
-            onDetail={handleItemDetailOpen}
-            onDelete={handleDelete}
-            onUpdate={handleUpdate}
-            className={Css.tile()}
-            itemList={props.itemList}
-          />
-        ))}
-        <div className={Css.buttonArea()}>
-          {props.shoppingListDataList.state !== "pending" && (
-            <Button colorScheme="primary" onClick={handleLoadNext}>
-              {lsi.loadNext}
-            </Button>
-          )}
-          {props.shoppingListDataList.state === "pending" && <Pending />}
-        </div>
+        <Grid
+          data={props.shoppingListDataList.data}
+          onLoad={handleLoadNext}
+          verticalGap={8}
+          horizontalGap={8}
+          tileMinHeight={400}
+          tileMaxHeight={700}
+          tileMinWidth={400}
+          tileMaxWidth={800}
+          emptyState={lsi.noShoppingLists}
+        >
+          <Tile {...tileProps} />
+        </Grid>
+
         {detailData.open && activeDataObject && (
           <DetailModal
           shoppingListDataObject={activeDataObject}
@@ -171,6 +185,7 @@ const ListView = createVisualComponent({
             open
           />
         )}
+
         {updateData.open && (
           <UpdateModal
             shoppingListDataObject={activeDataObject}

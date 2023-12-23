@@ -68,7 +68,8 @@
     "deleteFail": "Smazání nákupního seznamu selhalo!",
     "updateFail": "Upravení nákupního seznamu selhalo!",
     "pageLoadFail": "Načítání nákupních seznamů selhalo!",
-    "loadNext": "Načíst další 3 Nákupní seznamy"
+    "loadNext": "Načíst další 3 Nákupní seznamy",
+    "noShoppingLists": "Žádné nákupni seznamy"
   },
   "UnicornFeBe.Bricks.Joke.Tile": {
     "averageRating": "Průměrné hodnocení: {0} / 5",

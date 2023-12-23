@@ -81,7 +81,7 @@ function hasManagePermission(shoppingList, identity, profileList) {
   const isExecutive = profileList.includes("Executives");
   /**
      * REMOVE "//" AFTER useSession WORKS AND uuApp LOGIN WORKS
-     * REMOVE LINE "const { identity } = {identitiy: "6565-1"}"
+     * REMOVE LINE "const isOwner = shoppingList.uuIdentity === identity;"
      * */
   //const isOwner = shoppingList.uuIdentity === identity.uuIdentity;
   const isOwner = shoppingList.uuIdentity === identity;
@@ -96,7 +96,7 @@ const Tile = createVisualComponent({
 
    //@@viewOn:propTypes
   propTypes: {
-    shoppingListDataObject: PropTypes.object.isRequired,
+    //shoppingListDataObject: PropTypes.object.isRequired,
     itemList: PropTypes.array,
     onUpdate: PropTypes.func,
     onDelete: PropTypes.func,
@@ -112,32 +112,33 @@ const Tile = createVisualComponent({
   render(props) {
     const [preferences] = useUserPreferences();
     const lsi = useLsi(importLsi, [Tile.uu5Tag]);
+    const shoppingListDataObject = props.data
 
     useEffect(() => {
       if (
-        props.shoppingListDataObject.data.image &&
-        !props.shoppingListDataObject.data.imageUrl &&
-        props.shoppingListDataObject.state === "ready" &&
-        props.shoppingListDataObject.handlerMap?.getImage
+        shoppingListDataObject.data.image &&
+        !shoppingListDataObject.data.imageUrl &&
+        shoppingListDataObject.state === "ready" &&
+        shoppingListDataObject.handlerMap?.getImage
       ) {
-        props.shoppingListDataObject.handlerMap
-          .getImage(props.shoppingListDataObject.data)
+        shoppingListDataObject.handlerMap
+          .getImage(shoppingListDataObject.data)
           .catch((error) => Tile.logger.error("Error loading image", error));
       }
-    }, [props.shoppingListDataObject]);
+    }, [shoppingListDataObject]);
 
     function handleDelete(event) {
       event.stopPropagation();
-      props.onDelete(props.shoppingListDataObject);
+      props.onDelete(shoppingListDataObject);
     }
 
     function handleUpdate(event) {
       event.stopPropagation();
-      props.onUpdate(props.shoppingListDataObject);
+      props.onUpdate(shoppingListDataObject);
     }
 
     function handleDetail() {
-      props.onDetail(props.shoppingListDataObject);
+      props.onDetail(shoppingListDataObject);
     }
 
     function buildItemNames(itemIdList) {
@@ -156,9 +157,9 @@ const Tile = createVisualComponent({
     
     //@@viewOn:render
     const { elementProps } = Utils.VisualComponent.splitProps(props, Css.main());
-    const shoppingList = props.shoppingListDataObject.data;
+    const shoppingList = shoppingListDataObject.data;
     const canManage = hasManagePermission(shoppingList, props.identity, props.profileList);
-    const isActionDisabled = props.shoppingListDataObject.state === "pending";
+    const isActionDisabled = shoppingListDataObject.state === "pending";
 
     return (
       <Box {...elementProps} onClick={handleDetail}>

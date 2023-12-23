@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, Utils, useState, useDataList, useEffect, useRef } from "uu5g05";
+import { createComponent, Utils, useState, useDataList, useEffect, useRef, PortalElementProvider } from "uu5g05";
 import Config from "./config/config.js";
 import Calls from "calls";
 //@@viewOff:imports
@@ -37,7 +37,7 @@ const ListProvider = createComponent({
         delete: handleDelete,
         getImage: handleGetImage,
       },
-      pageSize: 3,
+      pageSize: 10,
     });
 
     const imageUrlListRef = useRef([]);
@@ -46,8 +46,7 @@ const ListProvider = createComponent({
       return Calls.ShoppingList.list(dtoIn);
     }
 
-    function handleLoadNext(pageInfo) {
-      const dtoIn = { pageInfo };
+    function handleLoadNext(dtoIn) {
       return Calls.ShoppingList.list(dtoIn);
     }
 
@@ -87,7 +86,7 @@ const ListProvider = createComponent({
     //@@viewOff:private
     
 
-    //@@viewOn:render
+    //@@viewOn:render  
     return typeof props.children === "function" ? props.children(shoppingListDataList) : props.children;
     //@@viewOff:render
   },

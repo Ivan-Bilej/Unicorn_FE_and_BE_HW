@@ -68,7 +68,8 @@
       "deleteFail": "Shopping list delete failed!",
       "updateFail": "Shopping list update failed!",
       "pageLoadFail": "shopping lists loading failed!",
-      "loadNext": "Load next 3 shopping lists"
+      "loadNext": "Load next 3 shopping lists",
+      "noShoppingLists": "No shopping lists"
     },
     "UnicornFeBe.Bricks.Joke.Tile": {
       "averageRating": "Average rating: {0} / 5",

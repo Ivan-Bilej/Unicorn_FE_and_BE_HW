@@ -1,60 +1,12 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils, useLsi } from "uu5g05";
+import { createVisualComponent, PropTypes, Utils, useLsi, ContentSizeProvider } from "uu5g05";
 import { Form, FormText, FormSelect, FormTextArea, SubmitButton, CancelButton, FormFile, FormLink } from "uu5g05-forms";
+import { Grid, Modal } from "uu5g05-elements";
 import Config from "./config/config.js";
-import { Modal } from "uu5g05-elements";
 import importLsi from "../../lsi/import-lsi";
 //@@viewOff:imports
 
 //@@viewOn:css
-/*const Css = {
-  content: () =>
-    Config.Css.css({
-      width: "100%",
-    }),
-
-  image: () =>
-    Config.Css.css({
-      display: "block",
-      width: "100%",
-      margin: "auto",
-    }),
-
-  text: (modal) =>
-    Config.Css.css({
-      display: "block",
-      marginLeft: modal.style.paddingLeft,
-      marginRight: modal.style.paddingRight,
-      marginTop: modal.style.paddingTop,
-      marginBottom: modal.style.paddingTop,
-    }),
-
-  infoLine: (modal) =>
-    Config.Css.css({
-      display: "block",
-      marginLeft: modal.style.paddingLeft,
-      marginTop: 8,
-    }),
-
-  footer: (modal) =>
-    Config.Css.css({
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-
-      marginTop: 8,
-      paddingTop: modal.style.paddingBottom,
-      paddingBottom: modal.style.paddingBottom,
-      paddingLeft: modal.style.paddingLeft,
-      paddingRight: modal.style.paddingRight,
-    }),
-
-  photo: () =>
-    Config.Css.css({
-      marginRight: 8,
-    }),
-};*/
-
 const Css = {
   input: () => Config.Css.css({ marginBottom: 16 }),
   controls: () => Config.Css.css({ display: "flex", gap: 8, justifyContent: "flex-end" }),
@@ -109,27 +61,50 @@ const CreateForm = createVisualComponent({
     const { elementProps } = Utils.VisualComponent.splitProps(props);
 
     return (
-      <Form {...elementProps} onSubmit={props.onSubmit} onValidate={handleValidate}>
-        <FormText label={lsi.name} name="name" maxLength={255} className={Css.input()} required autoFocus />
+      <ContentSizeProvider>
+        <Form {...elementProps} onSubmit={props.onSubmit} onValidate={handleValidate}>
+          <Grid
+            templateAreas={{
+              xs: "name, itemIdList, image, imageUrl, description, controls",
+              m: "name name, categoryIdList image, imageUrl, description description, controls controls",
+            }}
+            templateColumns={{ m: "1fr 1fr" }}
+            gap={8}
+          />
 
-        <FormSelect
-          label={lsi.item}
-          name="itemIdList"
-          itemList={getItemList(props.itemList)}
-          className={Css.input()}
-          multiple
-        />
+          <Grid.Item gridArea="name">
+            <FormText label={lsi.name} name="name" maxLength={255} className={Css.input()} required autoFocus />
+          </Grid.Item>
+          
+          <Grid.Item gridArea="itemIdList">
+            <FormSelect
+              label={lsi.item}
+              name="itemIdList"
+              itemList={getItemList(props.itemList)}
+              className={Css.input()}
+              multiple
+            />
+          </Grid.Item>
+          
+          <Grid.Item gridArea="image">
+            <FormFile label={lsi.image} name="image" accept="image/*" className={Css.input()} />
+          </Grid.Item>
 
-        <FormFile label={lsi.image} name="image" accept="image/*" className={Css.input()} />
-        <FormText label={lsi.imageUrl} name="imageUrl" maxLength={255} className={Css.input()} required autoFocus />
+          <Grid.Item gridArea="imageUrl">
+            <FormText label={lsi.imageUrl} name="imageUrl" maxLength={255} className={Css.input()} required autoFocus />
+          </Grid.Item>
+          
+          <Grid.Item gridArea="description">
+            <FormTextArea label={lsi.text} name="description" maxLength={4000} rows={10} className={Css.input()} autoResize />
+          </Grid.Item>
 
-        <FormTextArea label={lsi.text} name="description" maxLength={4000} rows={10} className={Css.input()} autoResize />
 
-        <div className={Css.controls()}>
-          <CancelButton onClick={props.onCancel}>{lsi.cancel}</CancelButton>
-          <SubmitButton>{lsi.submit}</SubmitButton>
-        </div>
-      </Form>
+          <Grid.Item gridArea="controls" className={Css.controls()}>
+            <CancelButton onClick={props.onCancel}>{lsi.cancel}</CancelButton>
+            <SubmitButton>{lsi.submit}</SubmitButton>
+          </Grid.Item>
+        </Form>
+      </ContentSizeProvider>
       
       /*
       <Modal header="Create shopping list" onClose={props.onClose} open>

@@ -47,8 +47,6 @@ const UpdateModal = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const lsi = useLsi(importLsi, [UpdateModal.uu5Tag]);
-    console.log(UpdateModal.uu5Tag)
-    console.log(lsi)
 
     async function handleSubmit(event) {
       const values = { ...event.data.value };
