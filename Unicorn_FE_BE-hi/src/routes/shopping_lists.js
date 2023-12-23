@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, useSession } from "uu5g05";
+import { createVisualComponent, useSession, useScreenSize } from "uu5g05";
 import { withRoute, RouteController } from "uu_plus4u5g02-app";
 import { useSubAppData, useSystemData } from "uu_plus4u5g02";
 import Config from "./config/config.js";
@@ -12,7 +12,26 @@ import CreateView from "../bricks/joke/create-view.js";
 
 //@@viewOn:css
 const Css = {
-  container: () => Config.Css.css({ maxWidth: 640, margin: "0px auto" }),
+  //container: () => Config.Css.css({ maxWidth: 640, margin: "0px auto" }),
+  container: (screenSize) => {
+    let maxWidth;
+
+    switch (screenSize) {
+      case "xs":
+      case "s":
+        maxWidth = "100%";
+        break;
+      case "m":
+      case "l":
+        maxWidth = 640;
+        break;
+      case "xl":
+      default:
+        maxWidth = 1280;
+    }
+
+    return Config.Css.css({ maxWidth: maxWidth, margin: "0px auto", paddingLeft: 8, paddingRight: 8 });
+  },
   createView: () => Config.Css.css({ margin: "24px 0px" }),
 };
 //@@viewOff:css
@@ -32,6 +51,7 @@ let ShoppingLists = createVisualComponent({
      * */
     //const { identity } = useSession();
     const { identity } = {identity: "6565-1"}
+    const [screenSize] = useScreenSize();
     
     const profileList = systemDataObject.data.profileData.uuIdentityProfileList;
     const canCreate = profileList.includes("Authorities") || profileList.includes("Executives");
@@ -44,7 +64,7 @@ let ShoppingLists = createVisualComponent({
         <ListProvider>
           {(shoppingListDataList) => (
             <RouteController routeDataObject={shoppingListDataList}>
-              <div className={Css.container()}>
+              <div className={Css.container(screenSize)}>
                 {canCreate && 
                   <CreateView 
                     shoppingListDataList={shoppingListDataList} 
