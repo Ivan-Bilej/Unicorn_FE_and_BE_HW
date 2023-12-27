@@ -29,10 +29,6 @@ const itemListDtoInType = shape({
   }),
 });
 
-const itemInternalListDtoInType = shape({
-  shoppingListId: string(/^[0-9a-f]{24}$/).isRequired(),
-});
-
 const itemGetDtoInType = shape({
   id: string(/^[0-9a-f]{24}$/).isRequired(),
   shoppingListId: string(/^[0-9a-f]{24}$/).isRequired(),

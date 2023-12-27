@@ -4,6 +4,7 @@ const { Validator } = require("uu_appg01_server").Validation;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const Errors = require("../api/errors/user-error.js");
+const Warnings = require("../api/warnings/user-warning.js")
 
 const WARNINGS = {
 
@@ -26,19 +27,19 @@ class UserAbl {
    */
   async add(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
-    let item = {}
+    let user = {}
 
     // validation of dtoIn
     const validationResult = Array.isArray(dtoIn)
-      ? this.validator.validate("userArrayCreateDtoInType", dtoIn)
-      : this.validator.validate("userCreateDtoInType", dtoIn);
+      ? this.validator.validate("userArrayAddDtoInType", dtoIn)
+      : this.validator.validate("userAddDtoInType", dtoIn);
 
     ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       uuAppErrorMap,
-      Warnings.Create.UnsupportedKeys.code,
-      Errors.Create.InvalidDtoIn
+      Warnings.Add.UnsupportedKeys.code,
+      Errors.Add.InvalidDtoIn
     );
 
     // Create user(s) in DB
@@ -66,19 +67,29 @@ class UserAbl {
   async remove(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
-    // validates dtoIn
-    const validationResult = this.validator.validate("itemDeleteDtoInType", dtoIn);
-    uuAppErrorMap = ValidationHelper.processValidationResult(
+    // validation of dtoIn
+    const validationResult = Array.isArray(dtoIn)
+      ? this.validator.validate("userArrayRemoveDtoInType", dtoIn)
+      : this.validator.validate("userRemoveDtoInType", dtoIn);
+
+    ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       uuAppErrorMap,
-      Warnings.Delete.UnsupportedKeys.code,
-      Errors.Delete.InvalidDtoIn
+      Warnings.Remove.UnsupportedKeys.code,
+      Errors.Remove.InvalidDtoIn
     );
     
     /// delete item from DB
-    await this.dao.delete( dtoIn.shoppingListId, awid, dtoIn.userId );
-
+    if (Array.isArray(dtoIn)) {
+      await Promise.all(dtoIn.map( async userDtoIn => {
+        await this.dao.remove( userDtoIn.shoppingListId, awid, userDtoIn.userId );
+      }))
+    }
+    else {
+      await this.dao.remove( dtoIn.shoppingListId, awid, dtoIn.userId );
+    }
+    
     // return dtoOut with success message
     const dtoOut = { success: true, uuAppErrorMap };
     return dtoOut;
@@ -96,19 +107,19 @@ class UserAbl {
     let uuAppErrorMap = {};
 
     // validates dtoIn
-    const validationResult = this.validator.validate("itemDeleteDtoInType", dtoIn);
+    const validationResult = this.validator.validate("userRemoveMyselfDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       uuAppErrorMap,
-      Warnings.Delete.UnsupportedKeys.code,
-      Errors.Delete.InvalidDtoIn
+      Warnings.RemoveMyself.UnsupportedKeys.code,
+      Errors.RemoveMyself.InvalidDtoIn
     );
     
-    const { uuIdentity, name: uuIdentityName } = session.getIdentity();
+    const { _uuIdentity: uuIdentity, _name: uuIdentityName } = session.getIdentity();
 
     /// delete item from DB
-    await this.dao.delete(dtoIn.shoppingListId,  awid, uuIdentity );
+    await this.dao.remove(dtoIn.shoppingListId,  awid, uuIdentity );
 
     // return dtoOut with success message
     const dtoOut = { success: true, uuAppErrorMap };
@@ -127,7 +138,7 @@ class UserAbl {
     let uuAppErrorMap = {};
 
     // validates dtoIn
-    const validationResult = this.validator.validate("itemListDtoInType", dtoIn);
+    const validationResult = this.validator.validate("userListDtoInType", dtoIn);
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
@@ -143,6 +154,34 @@ class UserAbl {
 
     // fetch items list
     const dtoOut = await this.dao.list(dtoIn.shoppingListId, awid, dtoIn.pageInfo);
+
+    // return dtoOut
+    return {...dtoOut, uuAppErrorMap};
+  }
+
+  /**
+   * Lists items internally.
+   * @param {string} awid - The unique workspace identifier.
+   * @param {Object} dtoIn - The data transfer object for internal item listing.
+   * @param {Object} session - The user session.
+   * @param {Object} authorizationResult - The authorization result.
+   * @returns {Object} - The list of items and any validation errors.
+   */
+  async listInternal(awid, dtoIn, session, authorizationResult) {
+    let uuAppErrorMap = {};
+
+    // validates dtoIn
+    const validationResult = this.validator.validate("userListDtoInType", dtoIn);
+    uuAppErrorMap = ValidationHelper.processValidationResult(
+      dtoIn,
+      validationResult,
+      uuAppErrorMap,
+      Warnings.List.UnsupportedKeys.code,
+      Errors.List.InvalidDtoIn
+    );
+
+    // fetch items list for shopping list ABL
+    const dtoOut = await this.dao.internalList(dtoIn.shoppingListId, awid);
 
     // return dtoOut
     return {...dtoOut, uuAppErrorMap};

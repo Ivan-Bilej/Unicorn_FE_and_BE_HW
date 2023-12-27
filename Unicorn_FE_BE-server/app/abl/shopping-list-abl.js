@@ -8,7 +8,10 @@ const Warnings = require("../api/warnings/shopping-list-warning.js");
 const ItemAbl = require("./item-abl.js");
 const ItemErrors = require("../api/errors/item-error.js");
 const ItemWarnings = require("../api/warnings/item-warning.js");
-const { type } = require("os");
+const UserAbl = require("./user-abl.js");
+const UserErrors = require("../api/errors/user-error.js");
+const UserWarnings = require("../api/warnings/user-warning.js");
+
 
 const FISHY_WORDS = [];
 const EXECUTIVES_PROFILE = "Executives";
@@ -76,12 +79,19 @@ class ShoppingListAbl {
       }));
     }
 
+    // Add users if they exist in dtoIn
+    if (dtoIn.allowedUsers && Array.isArray(dtoIn.allowedUsers)){
+      allowedUsers = await Promise.all(dtoIn.allowedUsers.map(async userDtoIn => {
+        userDtoIn.shoppingListId = String(shoppingList.id)
+        return await UserAbl.add(awid, userDtoIn, session, authorizationResult)
+      }))
+    }
+
     // prepare and return dtoOut
     const dtoOut = { 
       ...shoppingList, 
       items: items.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit})), 
-      allowedUsers: allowedUsers.map(allowedUser => ({id: allowedUser.id})), 
-      uuAppErrorMap, 
+      allowedUsers: allowedUsers.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName})), uuAppErrorMap, 
     };
     return dtoOut;
   }
@@ -89,7 +99,6 @@ class ShoppingListAbl {
   async update(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
     let items = [];
-    let allowedUsers = [];
 
     // validation of dtoIn
     const validationResult = this.validator.validate("shoppingListUpdateDtoInType", dtoIn);
@@ -128,11 +137,14 @@ class ShoppingListAbl {
       }));
     }
 
+    // fetch users of the shopping list 
+    const allowedUsers = await UserAbl.listInternal(awid, {shoppingListId: dtoIn.id}, session, authorizationResult)
+    
     // prepare and return dtoOut
     const dtoOut = {
       ...updatedShoppingList, 
       items: items.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit})), 
-      allowedUsers: allowedUsers.map(allowedUser => ({id: allowedUser.id})), 
+      allowedUsers: allowedUsers.itemList.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName})), 
       uuAppErrorMap 
       };
     return dtoOut;
@@ -157,15 +169,8 @@ class ShoppingListAbl {
     // delete all items connected to the shopping list
     do {
       const items = await ItemAbl.listInternal(
-        awid, 
-        {
-          shoppingListId: dtoIn.id, 
-        }, 
-        session, 
-        authorizationResult
+        awid, {shoppingListId: dtoIn.id}, session, authorizationResult
       );
-    
-      console.log(items);
     
       if (items.itemList.length > 0) {
         await Promise.all(items.itemList.map(async itemDtoIn => {
@@ -173,7 +178,22 @@ class ShoppingListAbl {
           return await ItemAbl.delete(awid, itemDtoIn, session, authorizationResult) 
         }))
       } else {
-        // No more items on this page, break out of the loop
+        break;
+      }
+    } while (true);
+
+    // remove all users connected to the shopping list
+    do {
+      const users = await UserAbl.listInternal(
+        awid, {shoppingListId: dtoIn.id}, session, authorizationResult
+      );
+    
+      if (users.itemList.length > 0) {
+        await Promise.all(users.itemList.map(async userDtoIn => {
+          userDtoIn = {userId: String(userDtoIn.userId), shoppingListId: String(userDtoIn.shoppingListId)}
+          return await UserAbl.remove(awid, userDtoIn, session, authorizationResult) 
+        }))
+      } else {
         break;
       }
     } while (true);
@@ -185,7 +205,6 @@ class ShoppingListAbl {
 
   async get(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
-    let allowedUsers = [];
 
     // validates dtoIn
     const validationResult = this.validator.validate("shoppingListGetDtoInType", dtoIn);
@@ -200,14 +219,17 @@ class ShoppingListAbl {
     // fetch shopping list by ID
     const shoppingList = await this.dao.get(awid, dtoIn.id);
 
+    // fetch items of the shopping list
     const items = await ItemAbl.listInternal(awid, {shoppingListId: dtoIn.id}, session, authorizationResult)
-    console.log(items)
+
+    // fetch users of the shopping list
+    const allowedUsers = await UserAbl.listInternal(awid, {shoppingListId: dtoIn.id}, session, authorizationResult)
 
     // prepare and return dtoOut
     const dtoOut = { 
       ...shoppingList, 
       items: items.itemList.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit})),
-      allowedUsers: allowedUsers.map(allowedUser => ({id: allowedUser.id})), 
+      allowedUsers: allowedUsers.itemList.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName})), 
       uuAppErrorMap };
     return dtoOut;
   }

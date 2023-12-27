@@ -4,7 +4,7 @@ const UserAbl = require("../../abl/user-abl.js");
 class UserController {
 
   add(ucEnv) {
-    return ShoppingListAbl.create(
+    return UserAbl.add(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -13,7 +13,7 @@ class UserController {
   }
 
   remove(ucEnv) {
-    return ShoppingListAbl.create(
+    return UserAbl.remove(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -22,7 +22,7 @@ class UserController {
   }
 
   removeMyself(ucEnv) {
-    return ShoppingListAbl.create(
+    return UserAbl.removeMyself(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),
@@ -31,7 +31,7 @@ class UserController {
   }
 
   list(ucEnv) {
-    return ShoppingListAbl.create(
+    return UserAbl.list(
       ucEnv.getUri().getAwid(), 
       ucEnv.getDtoIn(),
       ucEnv.getSession(),

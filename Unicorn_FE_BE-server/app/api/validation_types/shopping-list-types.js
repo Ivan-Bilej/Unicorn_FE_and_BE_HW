@@ -18,6 +18,7 @@ const shoppingListCreateDtoInType = shape({
   allowedUsers: array(
     shape({
       userId: string(/^[0-9]{1,4}\-[0-9]{1,4}(\-[0-9]{1,4}(\-[0-9]{1,4})?)?$/),
+      userName: string(255),
     })
   ).isRequired(),
 });
@@ -38,8 +39,13 @@ const shoppingListUpdateDtoInType = shape({
   title: string(1, 255),
   description: string(1, 4000),
   imageUrl: string(3, 4000),
-  items: array(),
-  allowedUsers: array(),
+  items: array(
+    shape({
+      id: string(/^[0-9a-f]{24}$/),
+      title: string(3, 255),
+      amount: integer(1,1000000000),
+      unit: string().oneOf(unitList),
+    })),
 });
 
 const shoppingListDeleteDtoInType = shape({

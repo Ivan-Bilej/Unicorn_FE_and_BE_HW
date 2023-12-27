@@ -3,7 +3,7 @@ const Errors = require("../errors/user-error.js");
 const Warnings = {
   Add: {
     UnsupportedKeys: {
-      code: `${Errors.Create.UC_CODE}unsupportedKeys`,
+      code: `${Errors.Add.UC_CODE}unsupportedKeys`,
     },
   },
   List: {
@@ -13,12 +13,12 @@ const Warnings = {
   },
   Remove: {
     UnsupportedKeys: {
-      code: `${Errors.List.UC_CODE}unsupportedKeys`,
+      code: `${Errors.Remove.UC_CODE}unsupportedKeys`,
     },
   },
   RemoveMyself: {
     UnsupportedKeys: {
-      code: `${Errors.List.UC_CODE}unsupportedKeys`,
+      code: `${Errors.RemoveMyself.UC_CODE}unsupportedKeys`,
     },
   },
 };

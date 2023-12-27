@@ -28,8 +28,6 @@ class ItemAbl {
     let uuAppErrorMap = {};
     let item = {}
 
-    console.log(dtoIn)
-
     // validation of dtoIn
     const validationResult = Array.isArray(dtoIn)
       ? this.validator.validate("itemArrayCreateDtoInType", dtoIn)

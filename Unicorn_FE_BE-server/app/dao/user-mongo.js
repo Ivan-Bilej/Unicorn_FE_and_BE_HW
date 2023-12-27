@@ -7,7 +7,7 @@ class UserMongo extends UuObjectDao {
   }
 
   async add(user) {
-    return await super.insertOne(item);
+    return await super.insertOne(user);
   }
 
   async list(shoppingListId, awid, pageInfo) {
@@ -19,8 +19,17 @@ class UserMongo extends UuObjectDao {
     return await super.find(filter, pageInfo);
   }
 
-  async remove(shoppingListId, awid, id) {
-    await super.deleteOne({ shoppingListId, awid, id });
+  async internalList(shoppingListId, awid) {
+    const filter = {
+      shoppingListId,
+      awid,
+    };
+
+    return await super.find(filter);
+  }
+
+  async remove(shoppingListId, awid, userId) {
+    await super.deleteOne({ shoppingListId, awid, userId });
   }
 }
 

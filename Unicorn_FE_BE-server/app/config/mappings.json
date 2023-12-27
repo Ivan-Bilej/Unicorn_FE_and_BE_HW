@@ -87,6 +87,21 @@
         "realization": "api/controllers/UserController.add",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "user/remove": {
+        "realization": "api/controllers/UserController.remove",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "user/removeMyself": {
+        "realization": "api/controllers/UserController.removeMyself",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "user/list": {
+        "realization": "api/controllers/UserController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }
