@@ -19,16 +19,7 @@ class UserMongo extends UuObjectDao {
     return await super.find(filter, pageInfo);
   }
 
-  async update(uuObject) {
-    let filter = { id: uuObject.id, awid: uuObject.awid, shoppingListId: uuObject.shoppingListId};
-    return await super.findOneAndUpdate(filter, uuObject, "NONE");
-  }
-
   async remove(shoppingListId, awid, id) {
-    await super.deleteOne({ shoppingListId, awid, id });
-  }
-
-  async removeMyself(shoppingListId, awid, id) {
     await super.deleteOne({ shoppingListId, awid, id });
   }
 }

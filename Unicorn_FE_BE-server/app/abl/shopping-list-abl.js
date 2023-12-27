@@ -105,8 +105,7 @@ class ShoppingListAbl {
     const visibility = authorizationResult.getAuthorizedProfiles().includes(EXECUTIVES_PROFILE);
 
     // get uuIdentity information
-    const uuIdentity = session.getIdentity().getUuIdentity();
-    const uuIdentityName = session.getIdentity().getName();
+    const { uuIdentity, name: uuIdentityName } = session.getIdentity();
 
     //save shopping list into DB
     const listDtoIn = {...dtoIn}

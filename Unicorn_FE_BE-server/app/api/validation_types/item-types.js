@@ -60,3 +60,11 @@ const itemDeleteDtoInType = shape({
   id: string(/^[0-9a-f]{24}$/).isRequired(),
   shoppingListId: string(/^[0-9a-f]{24}$/).isRequired(),
 });
+
+const itemArrayDeleteDtoInType = 
+array(
+  shape({
+    id: string(/^[0-9a-f]{24}$/).isRequired(),
+    shoppingListId: string(/^[0-9a-f]{24}$/).isRequired(),
+  })
+);

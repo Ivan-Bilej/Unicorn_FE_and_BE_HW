@@ -130,7 +130,10 @@ class ItemAbl {
     let uuAppErrorMap = {};
 
     // validates dtoIn
-    const validationResult = this.validator.validate("itemDeleteDtoInType", dtoIn);
+    const validationResult = Array.isArray(dtoIn)
+    ? this.validator.validate("itemArrayDeleteDtoInType", dtoIn)
+    : this.validator.validate("itemDeleteDtoInType", dtoIn);
+    
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
@@ -140,7 +143,14 @@ class ItemAbl {
     );
     
     /// delete item from DB
-    await this.dao.delete(dtoIn.shoppingListId, awid, dtoIn.id);
+    if (Array.isArray(dtoIn)) {
+      await Promise.all(dtoIn.map(async itemDtoIn => {
+        return this.dao.delete(itemDtoIn.shoppingListId, awid, itemDtoIn.id)
+      }))
+    }
+    else {
+      await this.dao.delete(dtoIn.shoppingListId, awid, dtoIn.id);
+    }
 
     // return dtoOut with success message
     const dtoOut = { success: true, uuAppErrorMap };

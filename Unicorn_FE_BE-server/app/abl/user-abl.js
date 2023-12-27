@@ -28,12 +28,10 @@ class UserAbl {
     let uuAppErrorMap = {};
     let item = {}
 
-    console.log(dtoIn)
-
     // validation of dtoIn
     const validationResult = Array.isArray(dtoIn)
-      ? this.validator.validate("itemArrayCreateDtoInType", dtoIn)
-      : this.validator.validate("itemCreateDtoInType", dtoIn);
+      ? this.validator.validate("userArrayCreateDtoInType", dtoIn)
+      : this.validator.validate("userCreateDtoInType", dtoIn);
 
     ValidationHelper.processValidationResult(
       dtoIn,
@@ -42,22 +40,19 @@ class UserAbl {
       Warnings.Create.UnsupportedKeys.code,
       Errors.Create.InvalidDtoIn
     );
-    
-    //get uuIdentity information
-    const { uuIdentity, name: uuIdentityName } = session.getIdentity();
 
-    // Create item(s) in DB
+    // Create user(s) in DB
     if (Array.isArray(dtoIn)){
-      item = await Promise.all(dtoIn.map(async itemDtoIn => {
-         return this.dao.create({ awid, ...itemDtoIn, uuIdentity, uuIdentityName, })
+      user = await Promise.all(dtoIn.map(async itemDtoIn => {
+         return this.dao.add({ awid, ...itemDtoIn })
       }))
     }
     else{
-      item = await this.dao.create({ awid, ...dtoIn, uuIdentity, uuIdentityName, });
+      user = await this.dao.add({ awid, ...dtoIn });
     }
     
     // return dtoOut
-    return {...item, uuAppErrorMap};
+    return {...user, uuAppErrorMap};
   }
 
   /**
@@ -82,7 +77,7 @@ class UserAbl {
     );
     
     /// delete item from DB
-    await this.dao.delete(dtoIn.shoppingListId, awid, dtoIn.id);
+    await this.dao.delete( dtoIn.shoppingListId, awid, dtoIn.userId );
 
     // return dtoOut with success message
     const dtoOut = { success: true, uuAppErrorMap };
@@ -110,8 +105,10 @@ class UserAbl {
       Errors.Delete.InvalidDtoIn
     );
     
+    const { uuIdentity, name: uuIdentityName } = session.getIdentity();
+
     /// delete item from DB
-    await this.dao.delete(dtoIn.shoppingListId, awid, dtoIn.id);
+    await this.dao.delete(dtoIn.shoppingListId,  awid, uuIdentity );
 
     // return dtoOut with success message
     const dtoOut = { success: true, uuAppErrorMap };
