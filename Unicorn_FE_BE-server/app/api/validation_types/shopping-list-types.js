@@ -1,12 +1,25 @@
 /* eslint-disable */
 
+const unitList = ["mg", "g", "kg", "ml", "l", "mm", "cm", "dm", "m", 
+            "kus", "ks"]
 
+            
 const shoppingListCreateDtoInType = shape({
   title: string(3, 255).isRequired(),
-  description: string(1, 4000),
+  description: string(1, 4000).isRequired(),
   imageUrl: string(3, 4000).isRequired(),
-  items: array(),
-  allowedUsers: array(),
+  items: array(
+    shape({
+      title: string(3, 255),
+      amount: integer(1,1000000000),
+      unit: string().oneOf(unitList),
+    })
+  ).isRequired(),
+  allowedUsers: array(
+    shape({
+      userId: string(/^[0-9]{1,4}\-[0-9]{1,4}(\-[0-9]{1,4}(\-[0-9]{1,4})?)?$/),
+    })
+  ).isRequired(),
 });
 
 const shoppingListListDtoInType = shape({
@@ -17,18 +30,18 @@ const shoppingListListDtoInType = shape({
 });
 
 const shoppingListGetDtoInType = shape({
-  _id: mongoId().isRequired,
+  id: string(/^[0-9a-f]{24}$/).isRequired(),
 });
 
 const shoppingListUpdateDtoInType = shape({
-  _id: mongoId().isRequired,
-  title: string(1, 255).isRequired(),
+  id: string(/^[0-9a-f]{24}$/).isRequired(),
+  title: string(1, 255),
   description: string(1, 4000),
-  image: string().isRequired(),
+  imageUrl: string(3, 4000),
   items: array(),
   allowedUsers: array(),
 });
 
 const shoppingListDeleteDtoInType = shape({
-  _id: mongoId().isRequired(),
+  id: string(/^[0-9a-f]{24}$/).isRequired(),
 });

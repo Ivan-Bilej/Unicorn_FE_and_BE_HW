@@ -1,15 +1,13 @@
 "use strict";
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
 
-class ItemMongo extends UuObjectDao {
-  async createSchema() {}
+class UserMongo extends UuObjectDao {
 
-  async create(item) {
-    return await super.insertOne(item);
+  async createSchema(){
   }
 
-  async get(shoppingListId, awid, id) {
-    return await super.findOne({ shoppingListId, id, awid,  });
+  async add(user) {
+    return await super.insertOne(item);
   }
 
   async list(shoppingListId, awid, pageInfo) {
@@ -21,23 +19,18 @@ class ItemMongo extends UuObjectDao {
     return await super.find(filter, pageInfo);
   }
 
-  async internalList(shoppingListId, awid) {
-    const filter = {
-      shoppingListId,
-      awid,
-    };
-
-    return await super.find(filter);
-  }
-
   async update(uuObject) {
     let filter = { id: uuObject.id, awid: uuObject.awid, shoppingListId: uuObject.shoppingListId};
     return await super.findOneAndUpdate(filter, uuObject, "NONE");
   }
 
-  async delete(shoppingListId, awid, id) {
+  async remove(shoppingListId, awid, id) {
+    await super.deleteOne({ shoppingListId, awid, id });
+  }
+
+  async removeMyself(shoppingListId, awid, id) {
     await super.deleteOne({ shoppingListId, awid, id });
   }
 }
 
-module.exports = ItemMongo;
+module.exports = UserMongo;

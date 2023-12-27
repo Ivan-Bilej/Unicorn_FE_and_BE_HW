@@ -13,17 +13,17 @@ const Warnings = {
   },
   Get: {
     UnsupportedKeys: {
-      code: `${Errors.List.UC_CODE}unsupportedKeys`,
+      code: `${Errors.Get.UC_CODE}unsupportedKeys`,
     },
   },
   Update: {
     UnsupportedKeys: {
-      code: `${Errors.List.UC_CODE}unsupportedKeys`,
+      code: `${Errors.Update.UC_CODE}unsupportedKeys`,
     },
   },
   Delete: {
     UnsupportedKeys: {
-      code: `${Errors.List.UC_CODE}unsupportedKeys`,
+      code: `${Errors.Delete.UC_CODE}unsupportedKeys`,
     },
   },
 };

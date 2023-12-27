@@ -68,6 +68,10 @@
       "item/list": {
         "sysStateList": ["active"],
         "profileList": ["Executives","Readers","Authenticated"]
+      },
+      "user/add": {
+        "sysStateList": ["active"],
+        "profileList": []
       }
     }
   }

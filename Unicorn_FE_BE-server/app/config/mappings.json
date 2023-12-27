@@ -28,7 +28,9 @@
       },
       "helloWorld": {
         "realization": "api/controllers/GreetingController.helloWorld",
-        "httpMethod": ["GET"],
+        "httpMethod": [
+          "GET"
+        ],
         "type": "CMD"
       },
       "shoppingList/create": {
@@ -73,11 +75,16 @@
       },
       "item/get": {
         "realization": "api/controllers/ItemController.get",
-        "httpMethod": "POST",
+        "httpMethod": "GET",
         "type": "CMD"
       },
       "item/list": {
         "realization": "api/controllers/ItemController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "user/add": {
+        "realization": "api/controllers/UserController.add",
         "httpMethod": "POST",
         "type": "CMD"
       }
