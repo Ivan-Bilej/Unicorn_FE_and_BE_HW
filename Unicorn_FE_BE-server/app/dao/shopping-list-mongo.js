@@ -14,22 +14,26 @@ class ShoppingListMongo extends UuObjectDao {
     return await super.find(filter, pageInfo);
   }
 
-  async get(awid, id) {
+  async getByVisibility(id, awid) {
     return await super.findOne({ id, awid });
   }
 
-  async list(awid, pageInfo) {
-    const filter = {awid};
+  async getByVisibility(id, awid, visibility) {
+    return await super.findOne({ id, awid, visibility });
+  }
+
+  async list(awid, visibility, pageInfo) {
+    const filter = {awid, visibility};
     return await super.find(filter, pageInfo);
   }
 
   async update(uuObject) {
-    let filter = { id: uuObject.id, awid: uuObject.awid };
+    let filter = { id: uuObject.id, awid: uuObject.awid, visibility: uuObject.visibility };
     return await super.findOneAndUpdate(filter, uuObject, "NONE");
   }
 
-  async delete(awid, id) {
-    await super.deleteOne({ awid, id });
+  async delete(id, awid, visibility) {
+    await super.deleteOne({ id, awid, visibility });
   }
 }
 
