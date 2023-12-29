@@ -10,28 +10,26 @@ class UserMongo extends UuObjectDao {
     return await super.insertOne(user);
   }
 
-  async list(shoppingListId, awid, visibility, pageInfo) {
+  async list(shoppingListId, awid, pageInfo) {
     const filter = {
       shoppingListId,
       awid,
-      visibility,
     };
 
     return await super.find(filter, pageInfo);
   }
 
-  async internalList(shoppingListId, awid, visibility) {
+  async internalList(shoppingListId, awid) {
     const filter = {
       shoppingListId,
       awid,
-      visibility,
     };
 
     return await super.find(filter);
   }
 
-  async remove(shoppingListId, awid, visibility, userId) {
-    await super.deleteOne({ shoppingListId, awid, visibility, userId });
+  async remove(shoppingListId, awid, userId) {
+    await super.deleteOne({ shoppingListId, awid, userId });
   }
 }
 

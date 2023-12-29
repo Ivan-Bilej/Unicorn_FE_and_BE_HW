@@ -31,59 +31,59 @@
       },
       "shoppingList/create": {
         "sysStateList": ["active"],
-        "profileList": ["Executives"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/update": {
         "sysStateList": ["active"],
-        "profileList": ["Executives"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/delete": {
         "sysStateList": ["active"],
-        "profileList": ["Executives"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/get": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "shoppingList/list": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "item/create": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "item/update": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "item/delete": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "item/get": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "item/list": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "user/add": {
         "sysStateList": ["active"],
-        "profileList": ["Executives"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "user/remove": {
         "sysStateList": ["active"],
-        "profileList": ["Executives"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "user/removeMyself": {
         "sysStateList": ["active"],
-        "profileList": ["Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       },
       "user/list": {
         "sysStateList": ["active"],
-        "profileList": ["Executives","Readers"]
+        "profileList": ["Executives","Readers","Authenticated"]
       }
     }
   }

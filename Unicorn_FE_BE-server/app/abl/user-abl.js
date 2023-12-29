@@ -44,8 +44,8 @@ class UserAbl {
 
     // Create user(s) in DB
     if (Array.isArray(dtoIn)){
-      user = await Promise.all(dtoIn.map(async userDtoIn => {
-         return this.dao.add({ awid, ...userDtoIn })
+      user = await Promise.all(dtoIn.map(async itemDtoIn => {
+         return this.dao.add({ awid, ...itemDtoIn })
       }))
     }
     else{

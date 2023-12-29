@@ -8,41 +8,35 @@ class ItemMongo extends UuObjectDao {
     return await super.insertOne(item);
   }
 
-  async get(shoppingListId, awid, visibility, id) {
-    return await super.findOne({ shoppingListId, id, visibility, awid,  });
+  async get(shoppingListId, awid, id) {
+    return await super.findOne({ shoppingListId, id, awid,  });
   }
 
-  async list(shoppingListId, awid, visibility, pageInfo) {
+  async list(shoppingListId, awid, pageInfo) {
     const filter = {
       shoppingListId,
       awid,
-      visibility,
     };
 
     return await super.find(filter, pageInfo);
   }
 
-  async internalList(shoppingListId, awid, visibility) {
+  async internalList(shoppingListId, awid) {
     const filter = {
       shoppingListId,
       awid,
-      visibility,
     };
 
     return await super.find(filter);
   }
 
   async update(uuObject) {
-    let filter = { 
-      id: uuObject.id, 
-      awid: uuObject.awid, 
-      visibility: uuObject.visibility, 
-      shoppingListId: uuObject.shoppingListId};
+    let filter = { id: uuObject.id, awid: uuObject.awid, shoppingListId: uuObject.shoppingListId};
     return await super.findOneAndUpdate(filter, uuObject, "NONE");
   }
 
-  async delete(shoppingListId, awid, visibility, id) {
-    await super.deleteOne({ shoppingListId, awid, visibility, id });
+  async delete(shoppingListId, awid, id) {
+    await super.deleteOne({ shoppingListId, awid, id });
   }
 }
 
