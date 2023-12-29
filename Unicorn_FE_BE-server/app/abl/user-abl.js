@@ -17,14 +17,6 @@ class UserAbl {
     this.dao = DaoFactory.getDao("user");
   }
 
-  /**
-   * Creates one or more items.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object|Object[]} dtoIn - The data transfer object(s) for item creation.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The created item(s) and any validation errors.
-   */
   async add(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
     let user = {}
@@ -56,14 +48,6 @@ class UserAbl {
     return {...user, uuAppErrorMap};
   }
 
-  /**
-   * Deletes an item.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for item deletion.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - Success message and any validation errors.
-   */
   async remove(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
@@ -95,14 +79,6 @@ class UserAbl {
     return dtoOut;
   }
 
-  /**
-   * Deletes an item.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for item deletion.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - Success message and any validation errors.
-   */
   async removeMyself(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
@@ -116,6 +92,7 @@ class UserAbl {
       Errors.RemoveMyself.InvalidDtoIn
     );
     
+    // get uuIdentity information
     const { _uuIdentity: uuIdentity, _name: uuIdentityName } = session.getIdentity();
 
     /// delete item from DB
@@ -126,14 +103,6 @@ class UserAbl {
     return dtoOut;
   }
 
-  /**
-   * Lists items based on criteria.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for item listing.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The list of items and any validation errors.
-   */
   async list(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
@@ -159,14 +128,6 @@ class UserAbl {
     return {...dtoOut, uuAppErrorMap};
   }
 
-  /**
-   * Lists items internally.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for internal item listing.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The list of items and any validation errors.
-   */
   async listInternal(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 

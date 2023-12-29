@@ -16,14 +16,6 @@ class ItemAbl {
     this.dao = DaoFactory.getDao("item");
   }
 
-  /**
-   * Creates one or more items.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object|Object[]} dtoIn - The data transfer object(s) for item creation.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The created item(s) and any validation errors.
-   */
   async create(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
     let item = {}
@@ -42,7 +34,7 @@ class ItemAbl {
     );
     
     //get uuIdentity information
-    const { uuIdentity, name: uuIdentityName } = session.getIdentity();
+    const { _uuIdentity: uuIdentity, _name: uuIdentityName } = session.getIdentity();
 
     // Create item(s) in DB
     if (Array.isArray(dtoIn)){
@@ -51,24 +43,16 @@ class ItemAbl {
       }))
     }
     else{
-      item = await this.dao.create({ awid, ...dtoIn, uuIdentity, uuIdentityName, });
+      item = await this.dao.create({ awid, ...dtoIn, uuIdentity, uuIdentityName, state: "active"});
     }
     
     // return dtoOut
     return {...item, uuAppErrorMap};
   }
 
-  /**
-   * Updates one or more items.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object|Object[]} dtoIn - The data transfer object(s) for item update.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The updated item(s) and any validation errors.
-   */
   async update(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
-    let updatedShoppingList = {}
+    let updatedItem = {}
 
     // validation of dtoIn
     const validationResult = Array.isArray(dtoIn)
@@ -83,12 +67,12 @@ class ItemAbl {
       Errors.Update.InvalidDtoIn
     );
 
-     // get uuIdentity information
-     const { uuIdentity, name: uuIdentityName } = session.getIdentity();
+    //get uuIdentity information
+    const { _uuIdentity: uuIdentity, _name: uuIdentityName } = session.getIdentity();
 
     // update item(s) in DB
     if (Array.isArray(dtoIn)) {
-      updatedShoppingList = await Promise.all(dtoIn.map(async itemDtoIn => {
+      updatedItem = await Promise.all(dtoIn.map(async itemDtoIn => {
         const itemObject = {
           ...itemDtoIn,
           awid,
@@ -105,25 +89,17 @@ class ItemAbl {
         uuIdentity,
         uuIdentityName,
       }
-      updatedShoppingList = await this.dao.update(itemObject) 
+      updatedItem = await this.dao.update(itemObject) 
     }
 
     // prepare and return dtoOut
     const dtoOut = {
-       ...updatedShoppingList, 
+       ...updatedItem, 
        uuAppErrorMap 
       };
     return dtoOut;
   }
 
-  /**
-   * Deletes an item.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for item deletion.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - Success message and any validation errors.
-   */
   async delete(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
@@ -155,14 +131,6 @@ class ItemAbl {
     return dtoOut;
   }
 
-  /**
-   * Retrieves an item by ID.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for item retrieval.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The retrieved item and any validation errors.
-   */
   async get(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
@@ -177,23 +145,20 @@ class ItemAbl {
     );
 
     // fetch item by ID and shopping list ID
-    const shoppingList = await this.dao.get(dtoIn.shoppingListId, awid, dtoIn.id);
+    const state = dtoIn.state !== undefined ? dtoIn.state : "active"
+    const item = await this.dao.get(
+      dtoIn.shoppingListId, 
+      awid, 
+      dtoIn.id,
+      state);
 
     // prepare and return dtoOut
     const dtoOut = { 
-      ...shoppingList, 
+      ...item, 
       uuAppErrorMap };
     return dtoOut;
   }
 
-  /**
-   * Lists items based on criteria.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for item listing.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The list of items and any validation errors.
-   */
   async list(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
@@ -213,20 +178,18 @@ class ItemAbl {
     dtoIn.pageInfo.pageIndex ??= 0;
 
     // fetch items list
-    const dtoOut = await this.dao.list(dtoIn.shoppingListId, awid, dtoIn.pageInfo);
+    const state = dtoIn.state !== undefined ? dtoIn.state : "active"
+    const dtoOut = await this.dao.list(
+      dtoIn.shoppingListId, 
+      awid, 
+      dtoIn.pageInfo,
+      state
+      );
 
     // return dtoOut
     return {...dtoOut, uuAppErrorMap};
   }
 
-  /**
-   * Lists items internally.
-   * @param {string} awid - The unique workspace identifier.
-   * @param {Object} dtoIn - The data transfer object for internal item listing.
-   * @param {Object} session - The user session.
-   * @param {Object} authorizationResult - The authorization result.
-   * @returns {Object} - The list of items and any validation errors.
-   */
   async listInternal(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 

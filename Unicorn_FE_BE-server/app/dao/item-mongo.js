@@ -8,14 +8,16 @@ class ItemMongo extends UuObjectDao {
     return await super.insertOne(item);
   }
 
-  async get(shoppingListId, awid, id) {
-    return await super.findOne({ shoppingListId, id, awid,  });
+  async get(shoppingListId, awid, id, state ) {
+    console.log(state)
+    return await super.findOne({ shoppingListId, id, awid, state });
   }
 
-  async list(shoppingListId, awid, pageInfo) {
+  async list(shoppingListId, awid, pageInfo, state ) {
     const filter = {
       shoppingListId,
       awid,
+      state,
     };
 
     return await super.find(filter, pageInfo);

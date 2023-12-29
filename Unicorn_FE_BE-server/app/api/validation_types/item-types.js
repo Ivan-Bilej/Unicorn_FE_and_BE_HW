@@ -23,6 +23,7 @@ const itemCreateDtoInType =
 
 const itemListDtoInType = shape({
   shoppingListId: string(/^[0-9a-f]{24}$/).isRequired(),
+  state: string().oneOf("active", "archived"),
   pageInfo: shape({
     pageIndex: integer(0, 1000000000),
     pageSize: integer(1, 1000000000),
@@ -32,6 +33,7 @@ const itemListDtoInType = shape({
 const itemGetDtoInType = shape({
   id: string(/^[0-9a-f]{24}$/).isRequired(),
   shoppingListId: string(/^[0-9a-f]{24}$/).isRequired(),
+  state: string().oneOf("active", "archived"),
 });
 
 const itemArrayUpdateDtoInType = array(
@@ -41,6 +43,7 @@ const itemArrayUpdateDtoInType = array(
     title: string(3, 255),
     amount: integer(1,1000000000),
     unit: string().oneOf(unitList),
+    state: string().oneOf("active", "archived"),
   })
  );
 
@@ -50,6 +53,7 @@ const itemUpdateDtoInType = shape({
   title: string(3, 255),
   amount: integer(1,1000000000),
   unit: string().oneOf(unitList),
+  state: string().oneOf("active", "archived"),
 });
 
 const itemDeleteDtoInType = shape({

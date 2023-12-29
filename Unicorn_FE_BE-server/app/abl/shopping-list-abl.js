@@ -3,22 +3,17 @@ const Path = require("path");
 const { Validator } = require("uu_appg01_server").Validation;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
+const { LoggerFactory } = require("uu_appg01_server").Logging;
 const Errors = require("../api/errors/shopping-list-error.js");
 const Warnings = require("../api/warnings/shopping-list-warning.js");
 const ItemAbl = require("./item-abl.js");
-const ItemErrors = require("../api/errors/item-error.js");
-const ItemWarnings = require("../api/warnings/item-warning.js");
 const UserAbl = require("./user-abl.js");
-const UserErrors = require("../api/errors/user-error.js");
-const UserWarnings = require("../api/warnings/user-warning.js");
-
+const { log } = require("console");
 
 const FISHY_WORDS = [];
 const EXECUTIVES_PROFILE = "Executives";
 
-const WARNINGS = {
-
-};
+const logger = LoggerFactory.get("UnicornFeBe.Abls.ShoppingListAbl");
 
 class ShoppingListAbl {
 
@@ -52,9 +47,8 @@ class ShoppingListAbl {
     // set visibility
     const visibility = authorizationResult.getAuthorizedProfiles().includes(EXECUTIVES_PROFILE);
 
-    // get uuIdentity information
-    const uuIdentity = session.getIdentity().getUuIdentity();
-    const uuIdentityName = session.getIdentity().getName();
+    //get uuIdentity information
+    const { _uuIdentity: uuIdentity, _name: uuIdentityName } = session.getIdentity();
 
     //save shopping list into DB
     const listDtoIn = {...dtoIn}
@@ -68,6 +62,10 @@ class ShoppingListAbl {
       uuIdentityName,
     }
     
+    if (logger.isDebugLoggable()) {
+      logger.debug("Creating shopping list with parameters: " + JSON.stringify(listObject));
+    }
+
     // Create shopping list
     const shoppingList = await this.dao.create(listObject) 
 
@@ -88,10 +86,11 @@ class ShoppingListAbl {
     }
 
     // prepare and return dtoOut
+    shoppingList.items = items.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit, state: item.state}))
+    shoppingList.allowedUsers = allowedUsers.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName}))
     const dtoOut = { 
       ...shoppingList, 
-      items: items.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit})), 
-      allowedUsers: allowedUsers.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName})), uuAppErrorMap, 
+      uuAppErrorMap, 
     };
     return dtoOut;
   }
@@ -114,7 +113,7 @@ class ShoppingListAbl {
     const visibility = authorizationResult.getAuthorizedProfiles().includes(EXECUTIVES_PROFILE);
 
     // get uuIdentity information
-    const { uuIdentity, name: uuIdentityName } = session.getIdentity();
+    const { _uuIdentity: uuIdentity, _name: uuIdentityName } = session.getIdentity();
 
     //save shopping list into DB
     const listDtoIn = {...dtoIn}
@@ -127,6 +126,12 @@ class ShoppingListAbl {
       uuIdentity,
       uuIdentityName,
     }
+
+    if (logger.isDebugLoggable()) {
+      logger.debug("Updating shopping list with parameters: " + JSON.stringify(listObject));
+    }
+
+    // Update existing shopping list
     const updatedShoppingList = await this.dao.update(listObject) 
 
     // Update items if they exist in dtoIn
@@ -141,10 +146,10 @@ class ShoppingListAbl {
     const allowedUsers = await UserAbl.listInternal(awid, {shoppingListId: dtoIn.id}, session, authorizationResult)
     
     // prepare and return dtoOut
+    updatedShoppingList.items =  items.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit, state: item.state}))
+    updatedShoppingList.allowedUsers= allowedUsers.itemList.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName}))
     const dtoOut = {
       ...updatedShoppingList, 
-      items: items.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit})), 
-      allowedUsers: allowedUsers.itemList.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName})), 
       uuAppErrorMap 
       };
     return dtoOut;
@@ -226,11 +231,12 @@ class ShoppingListAbl {
     const allowedUsers = await UserAbl.listInternal(awid, {shoppingListId: dtoIn.id}, session, authorizationResult)
 
     // prepare and return dtoOut
+    shoppingList.items = items.itemList.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit, state: item.state}))
+    shoppingList.allowedUsers = allowedUsers.itemList.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName}))
     const dtoOut = { 
       ...shoppingList, 
-      items: items.itemList.map(item => ({id: item.id, title: item.title, amount: item.amount, unit: item.unit})),
-      allowedUsers: allowedUsers.itemList.map(allowedUser => ({userId: allowedUser.userId, userName: allowedUser.userName})), 
-      uuAppErrorMap };
+      uuAppErrorMap, 
+    };
     return dtoOut;
   }
 
