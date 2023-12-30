@@ -133,9 +133,13 @@ class ItemAbl {
 
   async get(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
+    let item = {}
 
     // validates dtoIn
-    const validationResult = this.validator.validate("itemGetDtoInType", dtoIn);
+    const validationResult = Array.isArray(dtoIn)
+    ? this.validator.validate("itemArrayGetDtoInType", dtoIn)
+    : this.validator.validate("itemGetDtoInType", dtoIn);
+
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
@@ -143,14 +147,18 @@ class ItemAbl {
       Warnings.Get.UnsupportedKeys.code,
       Errors.Get.InvalidDtoIn
     );
-
+    
     // fetch item by ID and shopping list ID
-    const state = dtoIn.state !== undefined ? dtoIn.state : "active"
-    const item = await this.dao.get(
-      dtoIn.shoppingListId, 
-      awid, 
-      dtoIn.id,
-      state);
+    if (Array.isArray(dtoIn)) {
+      item = await Promise.all(dtoIn.map(async itemDtoIn => {
+        const state = itemDtoIn.state !== undefined ? itemDtoIn.state : "active"
+        return this.dao.get(itemDtoIn.shoppingListId, awid, itemDtoIn.id, state);
+      }))
+    }
+    else {
+      const state = dtoIn.state !== undefined ? dtoIn.state : "active"
+      item = await this.dao.get(dtoIn.shoppingListId, awid, dtoIn.id, state);
+    }
 
     // prepare and return dtoOut
     const dtoOut = { 

@@ -16,7 +16,7 @@ const Add = {
 };
 
 const Remove = {
-  UC_CODE: `${USER_ERROR_PREFIX}add/`,
+  UC_CODE: `${USER_ERROR_PREFIX}remove/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -28,7 +28,7 @@ const Remove = {
 };
 
 const RemoveMyself = {
-  UC_CODE: `${USER_ERROR_PREFIX}add/`,
+  UC_CODE: `${USER_ERROR_PREFIX}removeMyself/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {
@@ -40,7 +40,7 @@ const RemoveMyself = {
 };
 
 const List = {
-  UC_CODE: `${USER_ERROR_PREFIX}add/`,
+  UC_CODE: `${USER_ERROR_PREFIX}list/`,
 
   InvalidDtoIn: class extends FeBeUseCaseError {
     constructor() {

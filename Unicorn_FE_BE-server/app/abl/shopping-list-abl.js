@@ -10,7 +10,7 @@ const ItemAbl = require("./item-abl.js");
 const UserAbl = require("./user-abl.js");
 const { log } = require("console");
 
-const FISHY_WORDS = [];
+const FISHY_WORDS = ["barracuda", "broccoli", "Topolánek"];
 const EXECUTIVES_PROFILE = "Executives";
 
 const logger = LoggerFactory.get("UnicornFeBe.Abls.ShoppingListAbl");
@@ -39,8 +39,8 @@ class ShoppingListAbl {
 
     // check for fishy words
     FISHY_WORDS.forEach((word) => {
-      if (dtoIn.text.includes(word)) {
-        throw new Errors.Create.TextContainsFishyWords({ uuAppErrorMap }, { text: dtoIn.text, fishyWord: word });
+      if (dtoIn.description.includes(word)) {
+        throw new Errors.Create.TextContainsFishyWords({ uuAppErrorMap }, { text: dtoIn.description, fishyWord: word });
       }
     });
 

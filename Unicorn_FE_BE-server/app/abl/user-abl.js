@@ -45,7 +45,10 @@ class UserAbl {
     }
     
     // return dtoOut
-    return {...user, uuAppErrorMap};
+    return {
+      ...user, 
+      uuAppErrorMap
+    };
   }
 
   async remove(awid, dtoIn, session, authorizationResult) {
@@ -75,8 +78,11 @@ class UserAbl {
     }
     
     // return dtoOut with success message
-    const dtoOut = { success: true, uuAppErrorMap };
-    return dtoOut;
+    ;
+    return { 
+      success: true, 
+      uuAppErrorMap 
+    };
   }
 
   async removeMyself(awid, dtoIn, session, authorizationResult) {
@@ -99,8 +105,10 @@ class UserAbl {
     await this.dao.remove(dtoIn.shoppingListId,  awid, uuIdentity );
 
     // return dtoOut with success message
-    const dtoOut = { success: true, uuAppErrorMap };
-    return dtoOut;
+    return { 
+      success: true, 
+      uuAppErrorMap 
+    };
   }
 
   async list(awid, dtoIn, session, authorizationResult) {
@@ -125,7 +133,10 @@ class UserAbl {
     const dtoOut = await this.dao.list(dtoIn.shoppingListId, awid, dtoIn.pageInfo);
 
     // return dtoOut
-    return {...dtoOut, uuAppErrorMap};
+    return {
+      ...dtoOut, 
+      uuAppErrorMap
+    };
   }
 
   async listInternal(awid, dtoIn, session, authorizationResult) {
@@ -145,7 +156,10 @@ class UserAbl {
     const dtoOut = await this.dao.internalList(dtoIn.shoppingListId, awid);
 
     // return dtoOut
-    return {...dtoOut, uuAppErrorMap};
+    return {
+      ...dtoOut, 
+      uuAppErrorMap
+    };
   }
 }
 

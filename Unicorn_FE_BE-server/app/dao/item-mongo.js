@@ -9,7 +9,6 @@ class ItemMongo extends UuObjectDao {
   }
 
   async get(shoppingListId, awid, id, state ) {
-    console.log(state)
     return await super.findOne({ shoppingListId, id, awid, state });
   }
 
